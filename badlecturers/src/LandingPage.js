@@ -5,6 +5,7 @@ import Home from './Components/Home';
 import SignUp from './Components/SignUp';
 import Login from './Components/Login';
 import { UserProvider } from './contexts/UserProvider';
+import NavBar from './Components/NavBar';
 
 
 
@@ -16,7 +17,7 @@ function LandingPage() {
   return (
     <UserProvider>
       <div className="App">
-        <div>TODO: Nav bar</div>
+        <NavBar/>
         <button onClick={handleClick}>LOGIN SCREEN</button>
         <Routes>
           <Route path="/" element={<Home />} />
