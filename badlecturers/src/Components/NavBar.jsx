@@ -1,8 +1,11 @@
 import React, { useState, useContext, useEffect } from 'react';
+import { UserContext } from '../contexts/UserProvider';
 import { Col, Container, Row } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import "./CSS/NavBar.css"
 
 function NavBar() {
+    const user = useContext(UserContext);
     return (
         <Container fluid>
             <Row id="nav-bar">
@@ -13,12 +16,12 @@ function NavBar() {
                 <Col
                     className="d-none d-lg-block"
                     lg={1}>
-                    Home
+                    <Link to ="">Home</Link>
                 </Col>
                 <Col
                     className="d-none d-lg-block"
                     lg={1}>
-                    Login
+                    <Link to ="login">Login</Link>
                 </Col>
             </Row>
         </Container>
