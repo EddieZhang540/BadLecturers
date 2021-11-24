@@ -1,15 +1,45 @@
 import { useEffect, useState, useContext } from 'react';
-import { Container, Row } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import { UserContext } from '../contexts/UserProvider';
-import "./CSS/Course.css";
+import { db } from '../utils/firebase.js'
+import { collection, doc, setDoc, getDoc } from 'firebase/firestore'
+import "./CSS/CourseList.css";
 
 function CourseList(props) {
     const user = useContext(UserContext);
-    return (
-        <div id = "course-list">
-            Welcome back, {user.displayName}
+    const [courses, setCourses] = useState([]);
 
-        </div>
+    const showCourses = async () => {
+
+        const userRef = doc(db, "users", user.uid);
+        const getUser = await getDoc(userRef);
+        const userData = getUser.data();
+
+        console.log(userData);
+        const listCourses = userData.courses.map(course => <div>{course}</div>);
+
+        setCourses(<div>{listCourses}</div>);
+    }
+
+    useEffect(() => {
+        showCourses();
+    }, [courses])
+
+
+
+    return (
+        <Container fluid id="course-list">
+            <Row id="header">
+                <Col md={6} id="welcome-msg">Welcome back, {user.displayName}</Col>
+                <Col md={6} id="date">Today is Nov. 22, 2021</Col>
+            </Row>
+
+            <Container id="subscriptions">
+                <div>Your course offerings:</div>
+                {courses}
+            </Container>
+
+        </Container>
     );
 }
 

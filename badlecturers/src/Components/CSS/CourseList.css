@@ -1,0 +1,24 @@
+#course-list {
+    background-color: #d5ecff;
+    height: 100vh;
+}
+
+#header {
+    align-items: flex-end;
+    text-align: left;
+}
+
+#header>div {
+    padding: 5vh 0 0 5vw ;
+}
+
+#welcome-msg {
+    font-size: 2em;
+}
+
+#subscriptions {
+    width: 80vw;
+    margin: 3em auto;
+    padding: 20px;
+    border: solid black;
+}
