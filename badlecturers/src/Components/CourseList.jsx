@@ -15,15 +15,14 @@ function CourseList(props) {
         const getUser = await getDoc(userRef);
         const userData = getUser.data();
 
-        console.log(userData);
         const listCourses = userData.courses.map(course => <div>{course}</div>);
 
         setCourses(<div>{listCourses}</div>);
     }
 
-    useEffect(() => {
-        showCourses();
-    }, [courses])
+    // useEffect(() => {
+    //     showCourses();
+    // }, [])
 
 
 
@@ -35,7 +34,7 @@ function CourseList(props) {
             </Row>
 
             <Container id="subscriptions">
-                <div>Your course offerings:</div>
+                <div>Your lecture subscriptions:</div>
                 {courses}
             </Container>
 

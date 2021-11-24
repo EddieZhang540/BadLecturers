@@ -7,23 +7,40 @@ import { UserContext, UserProvider } from './contexts/UserProvider';
 import NavBar from './Components/NavBar';
 import Course from './Components/Course';
 import CourseList from './Components/CourseList';
-
+import axios from "axios";
+import dotenv from 'dotenv'
+dotenv.config()
 
 // sample course
-const math135 = 
+const math135 =
 {
   "name": "MATH 135",
   "id": "math135"
 }
 
 function LandingPage() {
+  useEffect(() => {
+    const options = {
+      method: 'GET',
+      url: "https://openapi.data.uwaterloo.ca/v3/Terms/current",
+      headers: {
+        "x-api-key": process.env.REACT_APP_UW_KEY
+      }
+    }
+
+    axios.request(options).then(result => {
+      console.log(result);
+    })
+  }, [])
+
+
   return (
     <UserProvider>
       <div className="App">
-        <NavBar/>
+        <NavBar />
         <Routes>
-          <Route path="/" element = {<Home/>}/>
-          <Route path="/course" element={<Course course = {math135}/>} />
+          <Route path="/" element={<Home />} />
+          <Route path="/course" element={<Course course={math135} />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
         </Routes>
@@ -36,9 +53,9 @@ function LandingPage() {
 function Home() {
   const user = useContext(UserContext);
   return (
-      <div>
-          {user === null ? <SignUp/>: <CourseList/>}
-      </div>
+    <div>
+      {user === null ? <SignUp /> : <CourseList />}
+    </div>
   );
 }
 

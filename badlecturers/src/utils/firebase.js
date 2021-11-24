@@ -27,7 +27,8 @@ const handleLogin = async (user) => {
 
     if (!getUser.exists()) {
         await setDoc(doc(db,"users",user.uid), {
-            name: user.displayName
+            name: user.displayName,
+            courses: []
         })
     }
 }

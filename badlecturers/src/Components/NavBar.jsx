@@ -18,10 +18,21 @@ function NavBar() {
                     lg={1}>
                     <Link to ="">Home</Link>
                 </Col>
+                
                 <Col
                     className="d-none d-lg-block"
                     lg={1}>
                     <Link to ="login">Login</Link>
+                </Col>
+                <Col
+                    className="d-none d-lg-block"
+                    lg={1}>
+                    <Link to ="">Help</Link>
+                </Col>
+                <Col
+                    className="d-none d-lg-block"
+                    lg={1}>
+                    <Link to ="">Contact us</Link>
                 </Col>
             </Row>
         </Container>
