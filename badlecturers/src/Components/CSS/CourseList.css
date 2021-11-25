@@ -22,3 +22,40 @@
     padding: 20px;
     border: solid black;
 }
+
+
+#search-lectures {
+    border: solid cornflowerblue 5px;
+    background-color: rgb(196, 227, 255);
+    border-radius: 20px;
+    width: 500px;
+    padding: 20px;
+    margin: 2em auto;
+}
+
+#search-lectures>div {
+    margin-bottom: 20px;
+}
+
+
+#search-lectures>div>input {
+    width: 300px;
+    margin: 0 auto;
+    border-radius: 20px;
+    border: none;
+}
+
+#search-header {
+    font-weight: 800;
+    font-size: 2em;
+}
+
+@media (min-width: 0px) and (max-width: 600px)  {
+    #search-lectures {
+        width: 90vw;
+    }
+
+    .input-label {
+        font-size: 1em;
+    }
+}

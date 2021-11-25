@@ -9,6 +9,7 @@ import Course from './Components/Course';
 import CourseList from './Components/CourseList';
 import axios from "axios";
 import dotenv from 'dotenv'
+import { TermProvider } from './contexts/TermContext';
 dotenv.config()
 
 // sample course
@@ -35,17 +36,20 @@ function LandingPage() {
 
 
   return (
-    <UserProvider>
-      <div className="App">
-        <NavBar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/course" element={<Course course={math135} />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<SignUp />} />
-        </Routes>
-      </div>
-    </UserProvider>
+    <TermProvider>
+      <UserProvider>
+        <div className="App">
+          <NavBar />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/course" element={<Course course={math135} />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
+          </Routes>
+        </div>
+      </UserProvider>
+    </TermProvider>
+
 
   );
 }
