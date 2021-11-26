@@ -47,19 +47,13 @@ function CourseList(props) {
 
                     event.preventDefault();
                     console.log(process.env.REACT_APP_UW_KEY);
+                    
                     let options = {
                         method: "GET",
-                        url: "https://openapi.data.uwaterloo.ca/v3/Courses/",
+                        url: `https://openapi.data.uwaterloo.ca/v3/Courses/${termInfo.termCode}/${subjectCode}/${catalogCode}`,
                         headers: {
-
                             'x-api-key': process.env.REACT_APP_UW_KEY,
                         },
-
-                        params: {
-                            termCode: termInfo.termCode,
-                            subject: subjectCode,
-                            catalogNumber: catalogCode
-                        }
                     }
 
                     axios.request(options).then(result => {
