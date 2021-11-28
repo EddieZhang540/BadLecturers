@@ -6,7 +6,7 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+    sans-serif !important; 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -14,4 +14,53 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+:root {
+  /* Theme colors */
+  --primary: var(--darkgreen);
+  --secondary: var(--linen);
+  --tertiary: var(--blue-green);
+  --highlight: var(--bronze);
+  
+  --darkgreen: #204f58;
+  --linen: #ffe6d3;
+  --clay: #744253;
+  --bronze: #A59132;
+  --blue-green: #2fa2aa;
+  /* Basic colors */
+  --blue: #007bff;
+  --indigo: #6610f2;
+  --pink: #e83e8c;
+  --red: #dc3545;
+  --orange: #fd7e14;
+  --green: #28a745;
+  --teal: #20c997;
+  --cyan: #17a2b8;
+  --white: #fff;
+  --lightgray: #e4e4e4;
+  --gray: #9b9b9b;
+  --darkgray: #5c5c5c;
+}
+
+
+/* buttons */
+.btn-primary {
+  color: var(--white);
+  border-color: var(--tertiary);
+  background-color: var(--tertiary);
+}
+.btn-primary:hover {
+  color: var(--secondary) !important;
+  border-color: var(--primary);
+  background-color: var(--primary);
+}
+.btn-outline-primary {
+  color: var(--black);
+  border-color: var(--tertiary);
+}
+.btn-outline-primary:hover {
+  color: var(--secondary);
+  border-color: var(--primary);
+  background-color: var(--primary);
 }

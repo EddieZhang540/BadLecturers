@@ -7,6 +7,7 @@ import "./CSS/CourseList.css";
 import { TermContext } from '../contexts/TermContext';
 import dotenv from 'dotenv'
 import axios from 'axios';
+import { ReactSearchAutocomplete } from 'react-search-autocomplete';
 dotenv.config();
 
 
@@ -32,7 +33,24 @@ function CourseList(props) {
         showCourses();
     }, [])
 
+    const testCourses = [
+        {
+            //name shows up in suggestion
+            name: "MATH 135",
+            subject: "math",
+            code: "135"
+        },
+        {
+            name: "MATH 136",
+            subject: "math",
+            code: "136"
+        },
+    ]
 
+    const handleOnSelect = (course) => {
+        setSubjectCode(course.subject);
+        setCatalogCode(course.code)
+    }
 
     return (
         <Container fluid id="course-list">
@@ -47,7 +65,7 @@ function CourseList(props) {
 
                     event.preventDefault();
                     console.log(process.env.REACT_APP_UW_KEY);
-                    
+
                     let options = {
                         method: "GET",
                         url: `https://openapi.data.uwaterloo.ca/v3/Courses/${termInfo.termCode}/${subjectCode}/${catalogCode}`,
@@ -62,14 +80,32 @@ function CourseList(props) {
 
                 }}>
                 <div id="search-header">Find bad lectures.</div>
-                <Form.Group
+
+                <Row className="align-items-center">
+                    <Col md={8} id="formSearchSubjectCode">
+                        <ReactSearchAutocomplete
+                            items={testCourses}
+                            autoFocus={true}
+                            showIcon={false}
+                            inputDebounce={100}
+                            maxResults={5}
+                            placeholder="Subject code (e.g. MATH 135)"
+                            styling={{ border: "none", borderRadius: "3px", }}
+                            onSelect={handleOnSelect}
+                        />
+                    </Col>
+                    <Col>
+                        <Button type="submit">Find lectures</Button>
+                    </Col>
+                </Row>
+
+                {/* <Form.Group
                     className="justify-content-center"
                     id="formSubjectCode">
                     <Form.Control
                         onChange={e => setSubjectCode(e.target.value)}
                         placeholder="Subject code (e.g. MATH)"
                         required />
-
                 </Form.Group>
 
                 <Form.Group
@@ -79,8 +115,8 @@ function CourseList(props) {
                         onChange={e => setCatalogCode(e.target.value)}
                         placeholder="Catalog code (e.g. 135)"
                         required />
-                </Form.Group>
-                <Button type="submit">Find lectures</Button>
+                </Form.Group> */}
+
             </Form>
 
 
