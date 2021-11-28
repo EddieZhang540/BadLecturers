@@ -38,22 +38,22 @@ function CourseList(props) {
             id: 0,
             //name gets searched as user types
             name: "MATH 135",
-            subject: "math",
-            code: "135"
         },
         {
             id: 1,
             name: "MATH 136",
-            subject: "math",
-            code: "136"
         },
     ]
 
     const handleOnSearch = (input, results) => {
         try {
             // updated as user types / every 100ms & takes the first (most compatible) result returned by autosuggest
-            setSubjectCode(results[0].subject);
-            setCatalogCode(results[0].code)
+            let c = results[0].name.match(/(\d+)/).index;
+            setSubjectCode(results[0].name.substring(0, c).trim()); //subject
+            setCatalogCode(results[0].name.substring(c)); //catalog
+
+            console.log(results[0].name.substring(0, c).trim());
+            console.log(results[0].name.substring(c));
         } catch (err) {
             /* TODO: Handle case when user searches for a course not in course list - Maybe prompt user to add a new entry?*/
         }
