@@ -35,21 +35,28 @@ function CourseList(props) {
 
     const testCourses = [
         {
-            //name shows up in suggestion
+            id: 0,
+            //name gets searched as user types
             name: "MATH 135",
             subject: "math",
             code: "135"
         },
         {
+            id: 1,
             name: "MATH 136",
             subject: "math",
             code: "136"
         },
     ]
 
-    const handleOnSelect = (course) => {
-        setSubjectCode(course.subject);
-        setCatalogCode(course.code)
+    const handleOnSearch = (input, results) => {
+        try {
+            // updated as user types / every 100ms & takes the first (most compatible) result returned by autosuggest
+            setSubjectCode(results[0].subject);
+            setCatalogCode(results[0].code)
+        } catch (err) {
+            /* TODO: Handle case when user searches for a course not in course list - Maybe prompt user to add a new entry?*/
+        }
     }
 
     return (
@@ -86,12 +93,11 @@ function CourseList(props) {
                         <ReactSearchAutocomplete
                             items={testCourses}
                             autoFocus={true}
-                            showIcon={false}
                             inputDebounce={100}
                             maxResults={5}
                             placeholder="Subject code (e.g. MATH 135)"
-                            styling={{ border: "none", borderRadius: "3px", }}
-                            onSelect={handleOnSelect}
+                            styling={{ borderRadius: "3px", }}
+                            onSearch={handleOnSearch}
                         />
                     </Col>
                     <Col>
