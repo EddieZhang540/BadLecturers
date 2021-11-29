@@ -20,13 +20,31 @@
 #subscriptions {
     width: 80vw;
     margin: 3em auto;
-    padding: 20px;
-    border: solid black;
+    align-items: center;
+    justify-content: center;
+    padding: 2em;
+    border: solid cornflowerblue 1px;
+    background-color: rgb(196, 227, 255);
+    border-radius: 20px;
+}
+
+#your-lectures {
+    text-align: left;
+    margin-bottom: 1em;
+    font-size: 2em;
+}
+
+#subscriptions>div {
+    padding:0;
+}
+
+.lecture-subscription { 
+    margin: 0 1em 0 1em;
 }
 
 
 #search-lectures {
-    border: solid cornflowerblue 5px;
+    border: solid cornflowerblue 1px;
     background-color: rgb(196, 227, 255);
     border-radius: 20px;
     width: 600px;
@@ -61,7 +79,7 @@
     width: 75%;
 }
 
-#searchResult>img {
+#searchResult>img, .lecture-subscription>img {
     height: 12em;
     object-fit: cover;
 }

@@ -12,7 +12,7 @@ function NavBar() {
             <Row id="nav-bar" className="align-items-center">
                 <Col className="d-none d-lg-block" lg={2}>
                     <Link to="">
-                        <img src={logo} alt="" width={50} height={50} />
+                        <img src={logo} alt="" width={50} height={50} style = {{marginRight: "0.25em"}} />
                         <span>BadLecturers</span>
                     </Link>
                 </Col>

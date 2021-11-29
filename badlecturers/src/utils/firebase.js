@@ -28,7 +28,7 @@ const handleLogin = async (user) => {
     if (!getUser.exists()) {
         await setDoc(doc(db,"users",user.uid), {
             name: user.displayName,
-            courses: []
+            courses: {}
         })
     }
 }
@@ -57,5 +57,3 @@ export const logOut = () => {
         console.log(error.message)
     })
 }
-
-export default firebase;

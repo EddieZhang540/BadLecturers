@@ -2,6 +2,7 @@ import { useEffect, useState, useContext } from 'react';
 import { Container, Row, Col, Form, Button, Card } from 'react-bootstrap';
 import { UserContext } from '../contexts/UserProvider';
 import { db } from '../utils/firebase.js'
+import firebase from 'firebase/compat/app';
 import { collection, doc, setDoc, getDoc, addDoc } from 'firebase/firestore'
 import "./CSS/CourseList.css";
 import { TermContext } from '../contexts/TermContext';
@@ -15,9 +16,6 @@ const banners = {
     "MAT": mathImg,
     // TODO: add more course images for departments
 }
-
-
-
 
 function CourseList(props) {
     const user = useContext(UserContext);
@@ -46,10 +44,28 @@ function CourseList(props) {
     const showCourses = async () => {
         const getUser = await getDoc(doc(db, "users", user.uid));
         userData = getUser.data();
+        const courses = userData.courses;
 
-        const listCourses = userData.courses.map(course => <div>{course}</div>);
-
-        setCourses(<div>{listCourses}</div>);
+        const listCourses = [];
+        for (const id of Object.keys(courses).sort()) {
+            const course = courses[id];
+            const courseId = course.subjectCode + " " + course.catalogNumber;
+            listCourses.push(
+                <Card className="lecture-subscription" as={Col} md="3">
+                    <Card.Img variant="top" src={banners[course.associatedAcademicGroupCode]} />
+                    <Card.Body>
+                        <Card.Title>{courseId}</Card.Title>
+                        <Card.Subtitle>{course.title}</Card.Subtitle>
+                        <Button style = {{marginTop: "0.5em"}}>Go to course page</Button>
+                    </Card.Body>
+                </Card>
+            );
+        }
+        setCourses(
+            <Row id="subscriptions">
+                <div id="your-lectures">Your lectures</div>
+                {listCourses}
+            </Row>);
     }
 
     useEffect(() => {
@@ -60,7 +76,6 @@ function CourseList(props) {
 
         const courseId = subjectCode + " " + catalogCode;
         const getCourse = await getDoc(doc(db, "courses", courseId));
-        console.log(courseId);
 
         // if the course doesn't exist, initialize its course page
         if (!getCourse.exists()) {
@@ -72,7 +87,7 @@ function CourseList(props) {
         }
 
         setSearchResults(
-            <Card id = "searchResult">
+            <Card id="searchResult">
                 <Card.Img variant="top" src={banners[course.associatedAcademicGroupCode]} />
                 <Card.Body>
                     <Card.Title>{courseId}</Card.Title>
@@ -81,6 +96,17 @@ function CourseList(props) {
                         {course.description}
                     </Card.Text>
                     <Button>Watch some bad {courseId} lectures</Button>
+                    <Button
+                        style={{ marginTop: "0.5em" }}
+                        onClick={() => {
+                            const userRef = db.collection('users').doc(user.uid);
+
+                            const key = `courses.${courseId}`;
+                            const newCourse = { [key]: course };
+
+                            userRef.update(newCourse);
+                            showCourses();
+                        }}>Add {courseId} to Your Courses</Button>
                 </Card.Body>
             </Card>
 
@@ -103,8 +129,7 @@ function CourseList(props) {
     return (
         <Container fluid id="course-list">
             <Row id="header">
-                {/* <Col md={6} id="welcome-msg">Welcome back, {user.displayName}</Col> */}
-                <Col md={6} id="date">Today is Nov. 22, 2021</Col>
+                <Col md={6} id="welcome-msg">Welcome back, {user.displayName}</Col>
             </Row>
 
 
@@ -148,15 +173,12 @@ function CourseList(props) {
                 </Row>
                 {searchResults}
             </Form>
-            
+
+
+            {courses}
 
 
 
-
-            <Container id="subscriptions">
-                <div>Your lecture subscriptions:</div>
-                {courses}
-            </Container>
 
         </Container>
     );
