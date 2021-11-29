@@ -20,6 +20,7 @@ export const TermProvider = ({ children }) => {
 
         axios.request(options).then(result => {
             console.log(result);
+            console.log("current term code (use to update course_list.json): " + result.data.termCode);
             setTerm(result.data);
         })
     }, [])

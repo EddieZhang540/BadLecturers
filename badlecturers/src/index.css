@@ -29,10 +29,10 @@ code {
   --tertiary: var(--blue-green);
   --highlight: var(--bronze);
   
-  --darkgreen: #204f58;
+  --darkgreen: #317481;
   --linen: #ffe6d3;
   --clay: #744253;
-  --bronze: #A59132;
+  --bronze: #ecbc63;
   --blue-green: #2fa2aa;
   /* Basic colors */
   --blue: #007bff;
@@ -49,6 +49,14 @@ code {
   --darkgray: #5c5c5c;
 }
 
+::selection {
+  color: white;
+  background: var(--highlight);  /* WebKit/Blink Browsers */
+}
+::-moz-selection {
+  color: white;
+  background: var(--highlight);  /* Gecko Browsers */
+}
 
 /* buttons */
 .btn-primary {
@@ -61,6 +69,16 @@ code {
   border-color: var(--primary);
   background-color: var(--primary);
 }
+.btn-primary:focus,
+.btn-primary:not(:disabled):not(.disabled):active,
+.show > .btn-primary.dropdown-toggle {
+  outline: none;
+  box-shadow: none;
+  color: var(--white) !important;
+  border-color: var(--tertiary);
+  background-color: var(--tertiary);
+}
+
 .btn-outline-primary {
   color: var(--black);
   border-color: var(--tertiary);
@@ -69,4 +87,12 @@ code {
   color: var(--secondary);
   border-color: var(--primary);
   background-color: var(--primary);
+}
+.btn-outline-primary:focus,
+.btn-outline-primary:not(:disabled):not(.disabled):active,
+.show > .btn-outline-primary.dropdown-toggle {
+  outline: none;
+  box-shadow: none;
+  color: var(--black);
+  border-color: var(--tertiary);
 }
