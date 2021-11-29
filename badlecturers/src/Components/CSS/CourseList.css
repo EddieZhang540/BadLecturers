@@ -1,6 +1,7 @@
 #course-list {
     background-color: #d5ecff;
-    height: 100vh;
+    min-height: 100vh;
+    height: 100%;
 }
 
 #header {
@@ -28,7 +29,7 @@
     border: solid cornflowerblue 5px;
     background-color: rgb(196, 227, 255);
     border-radius: 20px;
-    width: 500px;
+    width: 600px;
     padding: 20px;
     margin: 2em auto;
 }
@@ -52,8 +53,23 @@
 
 #formSearchSubjectCode {
     padding: 0 0 0 12px !important;
-    
+    z-index: 1;
 }
+
+#searchResult {
+    margin: 0 auto;
+    width: 75%;
+}
+
+#searchResult>img {
+    height: 12em;
+    object-fit: cover;
+}
+
+.card-text {
+    text-align: left;
+}
+
 
 @media (min-width: 0px) and (max-width: 600px)  {
     #search-lectures {

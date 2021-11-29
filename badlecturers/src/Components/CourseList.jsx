@@ -1,38 +1,32 @@
 import { useEffect, useState, useContext } from 'react';
-import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import { Container, Row, Col, Form, Button, Card } from 'react-bootstrap';
 import { UserContext } from '../contexts/UserProvider';
 import { db } from '../utils/firebase.js'
-import { collection, doc, setDoc, getDoc } from 'firebase/firestore'
+import { collection, doc, setDoc, getDoc, addDoc } from 'firebase/firestore'
 import "./CSS/CourseList.css";
 import { TermContext } from '../contexts/TermContext';
-import dotenv from 'dotenv'
 import axios from 'axios';
 import { ReactSearchAutocomplete } from 'react-search-autocomplete';
+import mathImg from "../assets/images/MATH-COURSE.jpg";
+import dotenv from 'dotenv'
 dotenv.config();
+
+const banners = {
+    "MAT": mathImg,
+    // TODO: add more course images for departments
+}
+
+
 
 
 function CourseList(props) {
     const user = useContext(UserContext);
+    let userData = null;
     const termInfo = useContext(TermContext);
     const [courses, setCourses] = useState([]);
     const [subjectCode, setSubjectCode] = useState("");
     const [catalogCode, setCatalogCode] = useState("");
-
-    const showCourses = async () => {
-
-        const userRef = doc(db, "users", user.uid);
-        const getUser = await getDoc(userRef);
-        const userData = getUser.data();
-
-        const listCourses = userData.courses.map(course => <div>{course}</div>);
-
-        setCourses(<div>{listCourses}</div>);
-    }
-
-    useEffect(() => {
-        showCourses();
-    }, [])
-
+    const [searchResults, setSearchResults] = useState(null);
     const testCourses = [
         {
             id: 0,
@@ -43,7 +37,55 @@ function CourseList(props) {
             id: 1,
             name: "MATH 136",
         },
+        {
+            id: 2,
+            name: "CS 135"
+        }
     ]
+
+    const showCourses = async () => {
+        const getUser = await getDoc(doc(db, "users", user.uid));
+        userData = getUser.data();
+
+        const listCourses = userData.courses.map(course => <div>{course}</div>);
+
+        setCourses(<div>{listCourses}</div>);
+    }
+
+    useEffect(() => {
+        showCourses();
+    }, [])
+
+    const handleAfterSearch = async (course) => {
+
+        const courseId = subjectCode + " " + catalogCode;
+        const getCourse = await getDoc(doc(db, "courses", courseId));
+        console.log(courseId);
+
+        // if the course doesn't exist, initialize its course page
+        if (!getCourse.exists()) {
+            await setDoc(doc(db, "courses", courseId), course);
+
+            // Initializing subcollections for the course
+            const postRef = doc(db, "courses", courseId, "posts", "init");
+            await setDoc(postRef, {});
+        }
+
+        setSearchResults(
+            <Card id = "searchResult">
+                <Card.Img variant="top" src={banners[course.associatedAcademicGroupCode]} />
+                <Card.Body>
+                    <Card.Title>{courseId}</Card.Title>
+                    <Card.Subtitle>{course.title}</Card.Subtitle>
+                    <Card.Text>
+                        {course.description}
+                    </Card.Text>
+                    <Button>Watch some bad {courseId} lectures</Button>
+                </Card.Body>
+            </Card>
+
+        );
+    }
 
     const handleOnSearch = (input, results) => {
         try {
@@ -52,8 +94,7 @@ function CourseList(props) {
             setSubjectCode(results[0].name.substring(0, c).trim()); //subject
             setCatalogCode(results[0].name.substring(c)); //catalog
 
-            console.log(results[0].name.substring(0, c).trim());
-            console.log(results[0].name.substring(c));
+            console.log(subjectCode, catalogCode);
         } catch (err) {
             /* TODO: Handle case when user searches for a course not in course list - Maybe prompt user to add a new entry?*/
         }
@@ -82,7 +123,8 @@ function CourseList(props) {
                     }
 
                     axios.request(options).then(result => {
-                        console.log(result);
+                        console.log(result)
+                        handleAfterSearch(result.data[0]);
                     }).catch(err => console.log(err))
 
                 }}>
@@ -104,26 +146,9 @@ function CourseList(props) {
                         <Button type="submit">Find lectures</Button>
                     </Col>
                 </Row>
-
-                {/* <Form.Group
-                    className="justify-content-center"
-                    id="formSubjectCode">
-                    <Form.Control
-                        onChange={e => setSubjectCode(e.target.value)}
-                        placeholder="Subject code (e.g. MATH)"
-                        required />
-                </Form.Group>
-
-                <Form.Group
-                    className="justify-content-center"
-                    id="formCatalogCode">
-                    <Form.Control
-                        onChange={e => setCatalogCode(e.target.value)}
-                        placeholder="Catalog code (e.g. 135)"
-                        required />
-                </Form.Group> */}
-
+                {searchResults}
             </Form>
+            
 
 
 
