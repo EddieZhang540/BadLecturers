@@ -9,7 +9,8 @@ import { TermContext } from '../contexts/TermProvider';
 import axios from 'axios';
 import { ReactSearchAutocomplete } from 'react-search-autocomplete';
 import mathImg from "../assets/images/MATH-COURSE.jpg";
-import dotenv from 'dotenv'
+import dotenv from 'dotenv';
+import course_list from "../.course_list.JSON";
 dotenv.config();
 
 const banners = {
@@ -25,21 +26,8 @@ function CourseList(props) {
     const [subjectCode, setSubjectCode] = useState("");
     const [catalogCode, setCatalogCode] = useState("");
     const [searchResults, setSearchResults] = useState(null);
-    const testCourses = [
-        {
-            id: 0,
-            //name gets searched as user types
-            name: "MATH 135",
-        },
-        {
-            id: 1,
-            name: "MATH 136",
-        },
-        {
-            id: 2,
-            name: "CS 135"
-        }
-    ]
+    const [inputString, setInputString] = useState("");
+    const course_list = course_list.map(c => ({ name: c.subjectCode + " " + c.catalogNumber }));
 
     const showCourses = async () => {
         const getUser = await getDoc(doc(db, "users", user.uid));
@@ -128,6 +116,11 @@ function CourseList(props) {
             /* TODO: Handle case when user searches for a course not in course list - Maybe prompt user to add a new entry?*/
         }
     }
+    const handleOnSelect = (item) => {
+        let c = item.name.match(/(\d+)/).index;
+        setSubjectCode(item.name.substring(0, c).trim()); //subject
+        setCatalogCode(item.name.substring(c)); //catalog
+    }
 
     return (
         <Container fluid id="course-list">
@@ -141,6 +134,7 @@ function CourseList(props) {
 
                     event.preventDefault();
                     console.log(process.env.REACT_APP_UW_KEY);
+                    setInputString(subjectCode + " " + catalogCode);
 
                     let options = {
                         method: "GET",
@@ -161,13 +155,15 @@ function CourseList(props) {
                 <Row className="align-items-center">
                     <Col md={8} id="formSearchSubjectCode">
                         <ReactSearchAutocomplete
-                            items={testCourses}
+                            // items={course_list}
                             autoFocus={true}
                             inputDebounce={100}
                             maxResults={5}
                             placeholder="Subject code (e.g. MATH 135)"
                             styling={{ borderRadius: "3px", }}
                             onSearch={handleOnSearch}
+                            onSelect={handleOnSelect}
+                            inputSearchString={inputString}
                         />
                     </Col>
                     <Col>
