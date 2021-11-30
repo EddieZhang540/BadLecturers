@@ -1,11 +1,11 @@
 import { useEffect, useState, useContext } from 'react';
-import { Container, Row, Col, Form, Button, Card } from 'react-bootstrap';
+import { Container, Row, Col, Form, Button, Card, CloseButton } from 'react-bootstrap';
 import { UserContext } from '../contexts/UserProvider';
 import { db } from '../utils/firebase.js'
 import firebase from 'firebase/compat/app';
 import { collection, doc, setDoc, getDoc, addDoc } from 'firebase/firestore'
 import "./CSS/CourseList.css";
-import { TermContext } from '../contexts/TermContext';
+import { TermContext } from '../contexts/TermProvider';
 import axios from 'axios';
 import { ReactSearchAutocomplete } from 'react-search-autocomplete';
 import mathImg from "../assets/images/MATH-COURSE.jpg";
@@ -38,13 +38,16 @@ function CourseList(props) {
             const course = courses[id];
             const courseId = course.subjectCode + " " + course.catalogNumber;
             listCourses.push(
-                <Card className="lecture-subscription" as={Col} md="3">
+                <Card className="lecture-subscription" as={Col} lg="3" md = "5">
+
                     <Card.Img variant="top" src={banners[course.associatedAcademicGroupCode]} />
                     <Card.Body>
+                        <CloseButton className = "cancel-subscription-btn"/>
                         <Card.Title>{courseId}</Card.Title>
                         <Card.Subtitle>{course.title}</Card.Subtitle>
                         <Button style={{ marginTop: "0.5em" }}>Go to course page</Button>
                     </Card.Body>
+
                 </Card>
             );
         }
