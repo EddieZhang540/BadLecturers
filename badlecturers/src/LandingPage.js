@@ -9,15 +9,9 @@ import Course from './Components/Course';
 import CourseList from './Components/CourseList';
 import axios from "axios";
 import dotenv from 'dotenv'
-import { TermProvider } from './contexts/TermContext';
+import { TermProvider } from './contexts/TermProvider';
 dotenv.config()
 
-// sample course
-const math135 =
-{
-  "name": "MATH 135",
-  "id": "math135"
-}
 
 function LandingPage() {
   useEffect(() => {
@@ -41,8 +35,8 @@ function LandingPage() {
         <div className="App">
           <NavBar />
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/course" element={<Course course={math135} />} />
+            <Route path="/" element={<HomePicker />} />
+            <Route path="/course/:courseId" element={<Course />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
           </Routes>
@@ -54,7 +48,7 @@ function LandingPage() {
   );
 }
 
-function Home() {
+function HomePicker() {
   const user = useContext(UserContext);
   return (
     <div>
@@ -62,5 +56,10 @@ function Home() {
     </div>
   );
 }
+
+function CoursePicker() {
+  
+}
+
 
 export default LandingPage;

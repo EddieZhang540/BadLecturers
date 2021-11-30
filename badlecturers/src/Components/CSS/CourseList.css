@@ -28,15 +28,22 @@
     border-radius: 20px;
 }
 
+#subscriptions>div {
+    padding:0;
+}
+
+.cancel-subscription-btn {
+    position: absolute;
+    right: 1em;
+}
+
 #your-lectures {
     text-align: left;
     margin-bottom: 1em;
     font-size: 2em;
 }
 
-#subscriptions>div {
-    padding:0;
-}
+
 
 .lecture-subscription { 
     margin: 0 1em 0 1em;
