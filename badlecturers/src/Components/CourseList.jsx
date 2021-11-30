@@ -11,6 +11,7 @@ import { ReactSearchAutocomplete } from 'react-search-autocomplete';
 import mathImg from "../assets/images/MATH-COURSE.jpg";
 import dotenv from 'dotenv';
 import course_list from "../.course_list.js";
+import { Link } from 'react-router-dom';
 dotenv.config();
 
 const banners = {
@@ -36,7 +37,7 @@ function CourseList(props) {
         const listCourses = [];
         for (const id of Object.keys(courses).sort()) {
             const course = courses[id];
-            const courseId = course.subjectCode + " " + course.catalogNumber;
+            const courseId = course.subjectCode + course.catalogNumber;
             listCourses.push(
                 <Card className="lecture-subscription" as={Col} lg="3" md="5">
 
@@ -45,7 +46,7 @@ function CourseList(props) {
                         <CloseButton className="cancel-subscription-btn" />
                         <Card.Title>{courseId}</Card.Title>
                         <Card.Subtitle>{course.title}</Card.Subtitle>
-                        <Button style={{ marginTop: "0.5em" }}>Go to course page</Button>
+                        <Link style={{ marginTop: "0.5em" }} to={`${courseId}`}>Go to course page</Link>
                     </Card.Body>
 
                 </Card>
@@ -64,7 +65,7 @@ function CourseList(props) {
 
     const handleAfterSearch = async (course) => {
 
-        const courseId = subjectCode + " " + catalogCode;
+        const courseId = subjectCode + catalogCode;
         const getCourse = await getDoc(doc(db, "courses", courseId));
 
         // if the course doesn't exist, initialize its course page
@@ -109,7 +110,6 @@ function CourseList(props) {
             setSubjectCode(results[0].subject); //subject
             setCatalogCode(results[0].catalog); //catalog
 
-            console.log(subjectCode, catalogCode);
         } catch (err) {
             /* TODO: Handle case when user searches for a course not in course list - Maybe prompt user to add a new entry?*/
         }

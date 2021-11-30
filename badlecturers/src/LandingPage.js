@@ -36,7 +36,7 @@ function LandingPage() {
           <NavBar />
           <Routes>
             <Route path="/" element={<HomePicker />} />
-            <Route path="/course/:courseId" element={<Course />} />
+            <Route path="/:courseId" element={<Course />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
           </Routes>
