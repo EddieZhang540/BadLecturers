@@ -38,11 +38,11 @@ function CourseList(props) {
             const course = courses[id];
             const courseId = course.subjectCode + " " + course.catalogNumber;
             listCourses.push(
-                <Card className="lecture-subscription" as={Col} lg="3" md = "5">
+                <Card className="lecture-subscription" as={Col} lg="3" md="5">
 
                     <Card.Img variant="top" src={banners[course.associatedAcademicGroupCode]} />
                     <Card.Body>
-                        <CloseButton className = "cancel-subscription-btn"/>
+                        <CloseButton className="cancel-subscription-btn" />
                         <Card.Title>{courseId}</Card.Title>
                         <Card.Subtitle>{course.title}</Card.Subtitle>
                         <Button style={{ marginTop: "0.5em" }}>Go to course page</Button>
@@ -153,7 +153,7 @@ function CourseList(props) {
                     <Col md={8} id="formSearchSubjectCode">
                         <ReactSearchAutocomplete
                             items={course_list}
-                            fuseOptions={{ keys: ["subject", "catalog"] }}
+                            fuseOptions={{ threshold: 0.9, keys: ["subject", "catalog"] }}
                             resultStringKeyName="display"
                             autoFocus={true}
                             inputDebounce={100}
