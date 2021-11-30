@@ -10,7 +10,7 @@ import axios from 'axios';
 import { ReactSearchAutocomplete } from 'react-search-autocomplete';
 import mathImg from "../assets/images/MATH-COURSE.jpg";
 import dotenv from 'dotenv';
-import course_list from "../.course_list.JSON";
+import course_list from "../.course_list.js";
 dotenv.config();
 
 const banners = {
@@ -27,7 +27,6 @@ function CourseList(props) {
     const [catalogCode, setCatalogCode] = useState("");
     const [searchResults, setSearchResults] = useState(null);
     const [inputString, setInputString] = useState("");
-    const course_list = course_list.map(c => ({ name: c.subjectCode + " " + c.catalogNumber }));
 
     const showCourses = async () => {
         const getUser = await getDoc(doc(db, "users", user.uid));
@@ -104,9 +103,8 @@ function CourseList(props) {
     const handleOnSearch = (input, results) => {
         try {
             // updated as user types / every 100ms & takes the first (most compatible) result returned by autosuggest
-            let c = results[0].name.match(/(\d+)/).index;
-            setSubjectCode(results[0].name.substring(0, c).trim()); //subject
-            setCatalogCode(results[0].name.substring(c)); //catalog
+            setSubjectCode(results[0].subject); //subject
+            setCatalogCode(results[0].catalog); //catalog
 
             console.log(subjectCode, catalogCode);
         } catch (err) {
@@ -114,9 +112,8 @@ function CourseList(props) {
         }
     }
     const handleOnSelect = (item) => {
-        let c = item.name.match(/(\d+)/).index;
-        setSubjectCode(item.name.substring(0, c).trim()); //subject
-        setCatalogCode(item.name.substring(c)); //catalog
+        setSubjectCode(item.subject); //subject
+        setCatalogCode(item.catalog); //catalog
     }
 
     return (
@@ -152,7 +149,9 @@ function CourseList(props) {
                 <Row className="align-items-center">
                     <Col md={8} id="formSearchSubjectCode">
                         <ReactSearchAutocomplete
-                            // items={course_list}
+                            items={course_list}
+                            fuseOptions={{ keys: ["subject", "catalog"] }}
+                            resultStringKeyName="display"
                             autoFocus={true}
                             inputDebounce={100}
                             maxResults={5}

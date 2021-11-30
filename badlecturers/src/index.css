@@ -72,11 +72,9 @@ code {
 .btn-primary:focus,
 .btn-primary:not(:disabled):not(.disabled):active,
 .show > .btn-primary.dropdown-toggle {
-  outline: none;
-  box-shadow: none;
-  color: var(--white) !important;
-  border-color: var(--tertiary);
-  background-color: var(--tertiary);
+  color: var(--secondary) !important;
+  border-color: var(--primary);
+  background-color: var(--primary);
 }
 
 .btn-outline-primary {
@@ -91,8 +89,7 @@ code {
 .btn-outline-primary:focus,
 .btn-outline-primary:not(:disabled):not(.disabled):active,
 .show > .btn-outline-primary.dropdown-toggle {
-  outline: none;
-  box-shadow: none;
-  color: var(--black);
-  border-color: var(--tertiary);
+  color: var(--secondary);
+  border-color: var(--primary);
+  background-color: var(--primary);
 }
