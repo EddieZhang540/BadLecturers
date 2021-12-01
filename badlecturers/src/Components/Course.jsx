@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from 'react';
-import { Container, Row } from 'react-bootstrap';
+import { Container, Row, Button, Col, DropdownButton, Dropdown } from 'react-bootstrap';
 import { UserContext } from '../contexts/UserProvider';
 import { useParams } from 'react-router-dom';
 import { db } from '../utils/firebase';
@@ -15,7 +15,6 @@ function Course() {
 
     const initializeWithCourseData = async () => {
         const courseData = (await getDoc(courseRef)).data();
-        console.log(courseData);
         setCourse(courseData);
         setIsLoading(false);
     }
@@ -25,15 +24,42 @@ function Course() {
     }, [])
 
     return (
-        (!isLoading ? 
-        <Container fluid>
-            <div>{course.subjectCode} {course.catalogNumber}</div>
-        </Container> 
-        
+        (!isLoading ?
+            <Container id="course-page" fluid>
+                <Row id="course-header">
+                    <Col md = "3">
+                        <div id="course-title">{course.subjectCode} {course.catalogNumber}</div>
+                        <div id="course-subtitle">{course.title}</div>
+                    </Col>
+                    <Col md="3">
+                        <Button id = "join-button">Subscribe</Button>
+                    </Col>
+                    <Col xxl = "1" lg = "2" md = "3">
+                        <DropdownButton id="sort-button" title = "Sort posts by">
+                            <Dropdown.Item>Most recent</Dropdown.Item>
+                            <Dropdown.Item>Most liked</Dropdown.Item>
+                            <Dropdown.Item>Most commented</Dropdown.Item>
+                        </DropdownButton>
+                    </Col>
 
-        : 
-        // placeholder - add fading loading screen later
-        <div>loading</div>)
+                    <Col xxl="1" lg = "2" md = "3">
+                        <Button>Create Post</Button>
+                    </Col>
+
+                    
+                </Row>
+
+                <Container id="posts">
+
+
+                </Container>
+
+            </Container>
+
+
+            :
+            // placeholder - add fading loading screen later
+            <div>loading</div>)
 
     );
 

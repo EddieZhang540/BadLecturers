@@ -1,9 +1,43 @@
 #course-page {
-    
+    background-color: #d5ecff;
+    min-height: 100vh;
+    height: 100%;
 }
 
-#name {
+#course-header {
+    align-items: flex-end;
+}
+
+#course-header>div {
+    margin-bottom: 2px;
+}
+
+#course-title {
     font-size: 5em;
+}
+
+#course-subtitle {
+    font-style: italic;
+}
+
+#join-button { 
+    font-size: 1.75em;
+    border-radius: 20px;
+    padding: 10px 20px 10px 20px;
     float:left;
-    margin-left: 5vw;
+}
+
+#posts {
+    border:solid black;
+    margin: 0 auto;
+
+    /* remove later */
+    margin-top: 2em;
+    height: 400px;
+}
+
+@media (min-width: 0px) and (max-width: 1200px)  {
+    #join-button {
+        float:inherit;
+    }
 }
