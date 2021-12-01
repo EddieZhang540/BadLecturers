@@ -1,4 +1,18 @@
 #post {
-    border: solid blue;
-    margin: 10px 0 10px 0;
+    border: solid #3a9daa;
+    border-radius: 50px;
+    min-height: 300px;
+    margin: 10px 0 20px 0;
+    padding: 20px;
+    text-align: left;
+    background-color: #92d3db;
+}
+
+#post-title {
+    font-weight: 800;
+    font-size: 2em;
+}
+
+#post-description {
+    font-size: 1.25em;
 }

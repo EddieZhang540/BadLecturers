@@ -6,12 +6,13 @@ import './CSS/Post.css'
 
 function Post(props) {
     const user = useContext(UserContext);
+    const timestamp = new Date(props.data.date).toDateString();
 
     return (
         <Container fluid id = "post">
-            <div>THIS IS A POST</div>
-            <div>{props.data.title}</div>
-            <div>{props.data.desc}</div>
+            <div id = "post-title">{props.data.title}</div>
+            <div style = {{float: "right"}}>Date created: {timestamp}</div>
+            <div id = "post-description">{props.data.desc}</div>
         </Container>
     );
 }

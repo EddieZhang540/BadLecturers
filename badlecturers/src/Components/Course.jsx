@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState, useContext, useMemo } from 'react';
 import { Container, Row, Button, Col, DropdownButton, Dropdown, Form, FloatingLabel } from 'react-bootstrap';
 import { UserContext } from '../contexts/UserProvider';
 import { useParams } from 'react-router-dom';
@@ -6,6 +6,7 @@ import { db } from '../utils/firebase';
 import { collection, doc, setDoc, getDocs, addDoc, query, getDoc } from 'firebase/firestore'
 import "./CSS/Course.css";
 import Post from './Post';
+import { render } from '@testing-library/react';
 
 function Course() {
     const user = useContext(UserContext);
@@ -25,20 +26,42 @@ function Course() {
     const handleDesc = (e) => setDesc(e.target.value);
 
     /****** Refresh data ******/
-    const [posts, setPosts] = useState(null);
+    const [postData, setPostData] = useState([]);
+    const [posts, setPosts] = useState([]);
 
     const refreshPosts = async () => {
-        let tempPosts = [];
+        let tempData = [];
         const q = query(postRef);
-        
+
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach(doc => {
-
-            tempPosts.push(<Post data = {doc.data()}/>);
+            if (doc.id !== "init")
+                tempData.push(doc.data());
         })
-
-        setPosts(tempPosts);
+        tempData.sort((a, b) => (a.date < b.date) ? 1 : -1);
+        setPostData(tempData);
     }
+
+    const sortBy = (option) => {
+        const tempData = [...postData];
+
+        if (option === "recent") {
+            setPostData(tempData.sort((a, b) => (a.date < b.date) ? 1 : -1));
+        } else if (option === "liked") {
+            setPostData(tempData.sort((a, b) => (a.likes > b.likes) ? 1 : -1));
+        } else if (option === "commented") {
+
+        }
+
+    }
+
+    useEffect(() => {
+        let tempPosts = [];
+        postData.forEach(postData => {
+            tempPosts.push(<Post data={postData} />)
+        });
+        setPosts(tempPosts);
+    }, [postData])
 
     /****** Initialization ******/
     const initializeWithCourseData = async () => {
@@ -65,14 +88,14 @@ function Course() {
                     </Col>
                     <Col xxl="1" lg="2" md="3">
                         <DropdownButton id="sort-button" title="Sort posts by">
-                            <Dropdown.Item>Most recent</Dropdown.Item>
+                            <Dropdown.Item onClick={() => sortBy("recent")}>Most recent</Dropdown.Item>
                             <Dropdown.Item>Most liked</Dropdown.Item>
                             <Dropdown.Item>Most commented</Dropdown.Item>
                         </DropdownButton>
                     </Col>
 
                     <Col xxl="2" lg="2" md="3">
-                        <Button onClick={() => { setEditing(!editing) }}>{editing ? "Discard post" : "Create post"}</Button>
+                        <Button onClick={() => { setEditing(!editing) }}>{editing ? "Close editor" : "Create post"}</Button>
                     </Col>
 
 
@@ -85,7 +108,18 @@ function Course() {
                                 e.preventDefault();
 
                                 // TODO: Do not allow post submission if title is missing
-                                postRef.add({ title: title, desc: desc });
+                                const newPost = {
+                                    title: title,
+                                    desc: desc,
+                                    date: (new Date()).getTime(),
+                                    author: user.uid,
+                                    likes: 0,
+                                }
+                                postRef.add(newPost).then(result => {
+                                    const newPostRef = db.collection('courses').doc(courseId)
+                                        .collection('posts').doc(result.id).collection('comments');
+                                    newPostRef.add({});
+                                })
                                 refreshPosts();
 
                             }}>

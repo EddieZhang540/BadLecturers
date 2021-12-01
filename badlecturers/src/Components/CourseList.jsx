@@ -43,7 +43,12 @@ function CourseList(props) {
 
                     <Card.Img variant="top" src={banners[course.associatedAcademicGroupCode]} />
                     <Card.Body>
-                        <CloseButton className="cancel-subscription-btn" />
+                        <CloseButton onClick = {() => {
+                            db.collection('users').doc(user.uid).set({courses:{
+                                [courseId]: firebase.firestore.FieldValue.delete()
+                            }}, {merge: true})
+                            showCourses();
+                        }} className="cancel-subscription-btn" />
                         <Card.Title>{courseId}</Card.Title>
                         <Card.Subtitle>{course.title}</Card.Subtitle>
                         <Link style={{ marginTop: "0.5em" }} to={`${courseId}`}>Go to course page</Link>
