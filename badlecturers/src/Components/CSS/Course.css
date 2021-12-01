@@ -27,14 +27,29 @@
     float:left;
 }
 
-#posts {
+#post-list {
     border:solid black;
     margin: 0 auto;
 
-    /* remove later */
     margin-top: 2em;
-    height: 400px;
 }
+
+#post-editor {
+    padding: 20px;
+    margin-top: 20px;
+    background-color:aquamarine;
+    border: solid yellow;
+}
+
+#post-editor > * {
+    margin-bottom: 5px;
+}
+
+#edit-desc {
+    min-height: 7em;
+    max-height: 10em;
+}
+
 
 @media (min-width: 0px) and (max-width: 1200px)  {
     #join-button {

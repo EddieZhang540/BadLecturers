@@ -86,7 +86,7 @@ function CourseList(props) {
                     <Card.Text>
                         {course.description}
                     </Card.Text>
-                    <Button>Watch some bad {courseId} lectures</Button>
+                    <Link style={{ marginTop: "0.5em" }} to={`${courseId}`}>Go to course page</Link>
                     <Button
                         style={{ marginTop: "0.5em" }}
                         onClick={() => {
