@@ -16,9 +16,21 @@ function Post(props) {
     }, [])
 
     return (
-        <Link to={`p/${props.data.id}`}
-            state={{ data: props.data }}
-            style={{ textDecoration: "none" }}>
+        (props.preview ?
+            <Link to={`p/${props.data.id}`}
+                state={{ data: props.data }}
+                style={{ textDecoration: "none" }}>
+                <Container fluid id="post">
+                    <Row style={{ alignItems: "flex-end" }}>
+                        <Col id="post-title">{props.data.title}</Col>
+                        <Col>
+                            <div id="post-date">{dateFormat(timestamp, "mm/d/yyyy, h:MM TT")}</div>
+                        </Col>
+                    </Row>
+                    <div id="post-description">{props.data.desc}</div>
+                </Container>
+            </Link>
+            :
             <Container fluid id="post">
                 <Row style={{ alignItems: "flex-end" }}>
                     <Col id="post-title">{props.data.title}</Col>
@@ -28,7 +40,8 @@ function Post(props) {
                 </Row>
                 <div id="post-description">{props.data.desc}</div>
             </Container>
-        </Link>
+        )
+
 
     );
 }

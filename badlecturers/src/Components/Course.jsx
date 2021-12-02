@@ -61,7 +61,7 @@ function Course() {
     useEffect(() => {
         let tempPosts = [];
         postData.forEach(postData => {
-            tempPosts.push(<Post data={postData} />)
+            tempPosts.push(<Post data={postData} preview = {true}/>)
         });
         setPosts(tempPosts);
     }, [postData])

@@ -17,7 +17,7 @@ function PostPage(props) {
 
     return (
         <Container fluid>
-            <Post data={postData} />
+            <Post data={postData} preview = {false} />
 
             <Container id="comments">
                 <div id="comment-header">Comments</div>
