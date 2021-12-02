@@ -16,6 +16,7 @@ function NavBar() {
                         <span>BadLecturers</span>
                     </Link>
                 </Col>
+                
 
                 {/* TODO: Dropdown menu here */}
                 <Col className="d-lg-none" xs={4}>Dropdown</Col>

@@ -13,9 +13,10 @@
     align-items: center;
     justify-content: center;
     padding: 2em;
-    border: solid cornflowerblue 1px;
+    box-shadow: 0 20px 15px -20px black;
     border-radius: 20px;
-    background-color: rgba(196, 227, 255, 0.95);
+    background-color: rgba(154, 208, 255, 0.95);
+    
 }
 
 #subscriptions>div {
@@ -37,16 +38,17 @@
 
 .lecture-subscription { 
     margin: 1em;
+    box-shadow: 0 1px 4px black;
 }
 
 
 #search-lectures {
-    border: solid cornflowerblue 1px;
+    box-shadow: 0 5px 5px -3px black;
     border-radius: 20px;
     width: 600px;
     padding: 20px;
     margin: 3em auto;
-    background-color: rgba(196, 227, 255, 0.95);
+    background-color: rgba(154, 208, 255, 0.95);
 }
 
 #search-lectures>div {

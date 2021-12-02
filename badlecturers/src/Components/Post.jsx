@@ -32,14 +32,17 @@ function Post(props) {
     return (
         <Row>
             <Col xs="auto" id="likes">
-                <div id = "like-counter">{postData.likes}</div>
-                <Button onClick={() => upvotePost()}>Upvote</Button>
+                <div id="like-counter">{postData.likes}</div>
+                <Button id = "upvote-button" onClick={() => upvotePost()}>
+                    <i class="fas fa-arrow-alt-circle-up"></i>
+                </Button>
             </Col>
             <Col>
                 <MyLink preview={props.preview} data={props.data}>
                     <Container fluid id="post">
                         <Row style={{ alignItems: "center" }}>
-                            <Col id="post-title">{props.data.title}</Col>
+                            <Col xs="auto" id="post-title">{postData.title}</Col>
+                            <Col xs="auto">by: {postData.authorName}</Col>
                             <Col>
                                 <div id="post-date">{dateFormat(timestamp, "mm/d/yyyy, h:MM TT")}</div>
                             </Col>

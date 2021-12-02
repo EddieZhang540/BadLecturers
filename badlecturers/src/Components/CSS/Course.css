@@ -5,26 +5,32 @@
 }
 
 #course-header {
+    padding: 0 2em 0 2em;
     align-items: flex-end;
+    background-color: rgb(226, 250, 141);
+    padding-bottom: 20px;
+    box-shadow: 0 10px 10px -10px black;
 }
 
 #course-header>div {
     margin-bottom: 2px;
 }
 
+.header-buttons {
+    font-weight: 800;
+    border-radius: 20px;
+    padding: 10px 20px 10px 20px;
+    float:left;
+}
+
 #course-title {
     font-size: 5em;
+    font-weight: 700;
 }
 
 #course-subtitle {
     font-style: italic;
-}
-
-#join-button { 
-    font-size: 1.75em;
-    border-radius: 20px;
-    padding: 10px 20px 10px 20px;
-    float:left;
+    font-size: 1.25em;
 }
 
 #post-list {

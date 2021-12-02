@@ -26,7 +26,13 @@
 }
 
 #like-counter {
-    font-size: 1.25em;
-    font-weight: 700;
+    font-size: 2em;
+    color:rgb(87, 87, 87);
+    font-weight: 800;
     top:50%;
+}
+
+#upvote-button {
+    border-radius: 100px;
+    font-size: 2em;
 }

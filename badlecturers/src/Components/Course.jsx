@@ -61,7 +61,7 @@ function Course() {
     useEffect(() => {
         let tempPosts = [];
         postData.forEach(newData => {
-            tempPosts.push(<Post data={newData} preview = {true}/>)
+            tempPosts.push(<Post data={newData} preview={true} />)
         });
         setPosts(tempPosts);
     }, [postData])
@@ -84,24 +84,27 @@ function Course() {
         (!isLoading ?
             <Container id="course-page" fluid>
                 <Row id="course-header">
-                    <Col md="3">
+                    <Col md="auto">
                         <div id="course-title">{course.subjectCode} {course.catalogNumber}</div>
                         <div id="course-subtitle">{course.title}</div>
                     </Col>
-                    <Col md="3">
-                        <Button id="join-button">Subscribe</Button>
+                    <Col xs="auto">
+                        <Button className="header-buttons"><i class="fas fa-plus" /> Subscribe</Button>
                     </Col>
-                    <Col xxl="1" lg="2" md="3">
-                        <DropdownButton id="sort-button" title="Sort posts by">
+                    <Col xs="auto">
+                        <Button className="header-buttons" onClick={() => setEditing(!editing)}><i class="fas fa-sticky-note" /> {editing ? "Close editor" : "Create post"}</Button>
+                    </Col>
+                    <Col>
+                        <DropdownButton
+                            style={{ float: "right" }}
+                            title={<i class="fas fa-sort-amount-down"></i>}>
                             <Dropdown.Item onClick={() => sortBy("recent")}>Most recent</Dropdown.Item>
                             <Dropdown.Item onClick={() => sortBy("liked")}>Most liked</Dropdown.Item>
                             <Dropdown.Item>Most commented</Dropdown.Item>
                         </DropdownButton>
                     </Col>
 
-                    <Col xxl="2" lg="2" md="3">
-                        <Button onClick={() => setEditing(!editing) }>{editing ? "Close editor" : "Create post"}</Button>
-                    </Col>
+
 
                 </Row>
 
@@ -118,6 +121,7 @@ function Course() {
                                     date: (new Date()).getTime(),
                                     author: user.uid,
                                     likes: 0,
+                                    authorName: user.displayName,
                                     courseId: courseId,
                                 }
                                 postRef.add(newPost).then(result => {
