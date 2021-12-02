@@ -1,7 +1,7 @@
 #course-list {
     background-color: #d5ecff;
     min-height: 100vh;
-    height: 100%;
+    height: 100%;    
 }
 
 #header {
@@ -43,10 +43,8 @@
     font-size: 2em;
 }
 
-
-
 .lecture-subscription { 
-    margin: 0 1em 0 1em;
+    margin: 1em;
 }
 
 

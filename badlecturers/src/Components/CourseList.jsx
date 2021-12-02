@@ -8,7 +8,13 @@ import "./CSS/CourseList.css";
 import { TermContext } from '../contexts/TermProvider';
 import axios from 'axios';
 import { ReactSearchAutocomplete } from 'react-search-autocomplete';
+
+// Images
 import mathImg from "../assets/images/MATH-COURSE.jpg";
+import sciImg from "../assets/images/SCI-COURSE.jpg";
+import noMatchImg from "../assets/images/NO-MATCH.png";
+
+
 import dotenv from 'dotenv';
 import course_list from "../.course_list.js";
 import { Link } from 'react-router-dom';
@@ -16,6 +22,8 @@ dotenv.config();
 
 const banners = {
     "MAT": mathImg,
+    "SCI": sciImg,
+    "noMatch": noMatchImg
     // TODO: add more course images for departments
 }
 
@@ -39,14 +47,17 @@ function CourseList(props) {
             const course = courses[id];
             const courseId = course.subjectCode + course.catalogNumber;
             listCourses.push(
-                <Card className="lecture-subscription" as={Col} lg="3" md="5">
+                <Card className="lecture-subscription" as={Col} lg="5" md="5">
 
-                    <Card.Img variant="top" src={banners[course.associatedAcademicGroupCode]} />
+                    <Card.Img variant="top" src={(course.associatedAcademicGroupCode in banners) ?
+                        banners[course.associatedAcademicGroupCode] : banners["noMatch"]} />
                     <Card.Body>
-                        <CloseButton onClick = {() => {
-                            db.collection('users').doc(user.uid).set({courses:{
-                                [courseId]: firebase.firestore.FieldValue.delete()
-                            }}, {merge: true})
+                        <CloseButton onClick={() => {
+                            db.collection('users').doc(user.uid).set({
+                                courses: {
+                                    [courseId]: firebase.firestore.FieldValue.delete()
+                                }
+                            }, { merge: true })
                             showCourses();
                         }} className="cancel-subscription-btn" />
                         <Card.Title>{courseId}</Card.Title>
@@ -84,16 +95,20 @@ function CourseList(props) {
 
         setSearchResults(
             <Card id="searchResult">
-                <Card.Img variant="top" src={banners[course.associatedAcademicGroupCode]} />
+                <Card.Img variant="top" src={(course.associatedAcademicGroupCode in banners) ?
+                    banners[course.associatedAcademicGroupCode] : banners["noMatch"]} />
                 <Card.Body>
+                    <CloseButton onClick={() => setSearchResults(null)} className="cancel-subscription-btn" />
                     <Card.Title>{courseId}</Card.Title>
+
                     <Card.Subtitle>{course.title}</Card.Subtitle>
                     <Card.Text>
                         {course.description}
                     </Card.Text>
                     <Link style={{ marginTop: "0.5em" }} to={`${courseId}`}>Go to course page</Link>
                     <Button
-                        style={{ marginTop: "0.5em" }}
+                        id="add-subscription-button"
+                        style={{ display: "block", margin: "1em auto" }}
                         onClick={() => {
                             const userRef = db.collection('users').doc(user.uid);
 
@@ -102,7 +117,8 @@ function CourseList(props) {
 
                             userRef.update(newCourse);
                             showCourses();
-                        }}>Add {courseId} to Your Courses</Button>
+                        }}>Add {courseId} to Your Courses
+                    </Button>
                 </Card.Body>
             </Card>
 

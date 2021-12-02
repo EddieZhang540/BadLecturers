@@ -6,7 +6,6 @@ import { db } from '../utils/firebase';
 import { collection, doc, setDoc, getDocs, addDoc, query, getDoc } from 'firebase/firestore'
 import "./CSS/Course.css";
 import Post from './Post';
-import { render } from '@testing-library/react';
 
 function Course() {
     const user = useContext(UserContext);
@@ -29,19 +28,23 @@ function Course() {
     const [postData, setPostData] = useState([]);
     const [posts, setPosts] = useState([]);
 
+    // Gets firestore's post data and updates postData
     const refreshPosts = async () => {
         let tempData = [];
         const q = query(postRef);
 
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach(doc => {
+            let newPostData = doc.data();
+            newPostData.id = doc.id;
             if (doc.id !== "init")
-                tempData.push(doc.data());
+                tempData.push(newPostData);
         })
         tempData.sort((a, b) => (a.date < b.date) ? 1 : -1);
         setPostData(tempData);
     }
 
+    // sorts postData by some property [option]
     const sortBy = (option) => {
         const tempData = [...postData];
 
@@ -50,11 +53,11 @@ function Course() {
         } else if (option === "liked") {
             setPostData(tempData.sort((a, b) => (a.likes > b.likes) ? 1 : -1));
         } else if (option === "commented") {
-
+            // TODO
         }
-
     }
 
+    // Re-renders posts on every update to postData
     useEffect(() => {
         let tempPosts = [];
         postData.forEach(postData => {
@@ -62,6 +65,7 @@ function Course() {
         });
         setPosts(tempPosts);
     }, [postData])
+
 
     /****** Initialization ******/
     const initializeWithCourseData = async () => {
@@ -95,7 +99,7 @@ function Course() {
                     </Col>
 
                     <Col xxl="2" lg="2" md="3">
-                        <Button onClick={() => { setEditing(!editing) }}>{editing ? "Close editor" : "Create post"}</Button>
+                        <Button onClick={() => setEditing(!editing) }>{editing ? "Close editor" : "Create post"}</Button>
                     </Col>
 
 
@@ -114,6 +118,7 @@ function Course() {
                                     date: (new Date()).getTime(),
                                     author: user.uid,
                                     likes: 0,
+                                    courseId: courseId,
                                 }
                                 postRef.add(newPost).then(result => {
                                     const newPostRef = db.collection('courses').doc(courseId)

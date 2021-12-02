@@ -1,11 +1,14 @@
 #post {
     border: solid #3a9daa;
     border-radius: 50px;
-    min-height: 300px;
+    min-height: 175px;
     margin: 10px 0 20px 0;
     padding: 20px;
     text-align: left;
     background-color: #92d3db;
+    font-size: 1.25em;
+    color: black;
+    
 }
 
 #post-title {
@@ -13,6 +16,7 @@
     font-size: 2em;
 }
 
-#post-description {
-    font-size: 1.25em;
+#post-date {
+    float: right;
+    font-style: italic;
 }

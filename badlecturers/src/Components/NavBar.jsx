@@ -10,9 +10,9 @@ function NavBar() {
     return (
         <Container fluid>
             <Row id="nav-bar" className="align-items-center">
-                <Col className="d-none d-lg-block" lg={2}>
+                <Col className="d-none d-lg-block" xs={3}>
                     <Link to="">
-                        <img src={logo} alt="" width={50} height={50} style = {{marginRight: "0.25em"}} />
+                        <img src={logo} alt="" width={40} height={40} style = {{marginRight: "1em"}} />
                         <span>BadLecturers</span>
                     </Link>
                 </Col>
@@ -40,7 +40,7 @@ function NavBar() {
                 <Col
                     className="d-none d-lg-block"
                     lg={1}>
-                    <Link to="">Contact us</Link>
+                    <Link to="">Contact</Link>
                 </Col>
             </Row>
         </Container>

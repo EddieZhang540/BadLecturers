@@ -10,6 +10,7 @@ import CourseList from './Components/CourseList';
 import axios from "axios";
 import dotenv from 'dotenv'
 import { TermProvider } from './contexts/TermProvider';
+import PostPage from './Components/PostPage';
 dotenv.config()
 
 
@@ -39,6 +40,7 @@ function LandingPage() {
             <Route path="/:courseId" element={<Course />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
+            <Route path=":courseId/p/:postId" element ={<PostPage />} />
           </Routes>
         </div>
       </UserProvider>
