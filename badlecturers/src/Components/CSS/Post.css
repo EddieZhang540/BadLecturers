@@ -20,3 +20,13 @@
     float: right;
     font-style: italic;
 }
+
+#likes {
+    margin-top: 2em;
+}
+
+#like-counter {
+    font-size: 1.25em;
+    font-weight: 700;
+    top:50%;
+}

@@ -51,7 +51,7 @@ function Course() {
         if (option === "recent") {
             setPostData(tempData.sort((a, b) => (a.date < b.date) ? 1 : -1));
         } else if (option === "liked") {
-            setPostData(tempData.sort((a, b) => (a.likes > b.likes) ? 1 : -1));
+            setPostData(tempData.sort((a, b) => (a.likes < b.likes) ? 1 : -1));
         } else if (option === "commented") {
             // TODO
         }
@@ -60,8 +60,8 @@ function Course() {
     // Re-renders posts on every update to postData
     useEffect(() => {
         let tempPosts = [];
-        postData.forEach(postData => {
-            tempPosts.push(<Post data={postData} preview = {true}/>)
+        postData.forEach(newData => {
+            tempPosts.push(<Post data={newData} preview = {true}/>)
         });
         setPosts(tempPosts);
     }, [postData])
@@ -94,7 +94,7 @@ function Course() {
                     <Col xxl="1" lg="2" md="3">
                         <DropdownButton id="sort-button" title="Sort posts by">
                             <Dropdown.Item onClick={() => sortBy("recent")}>Most recent</Dropdown.Item>
-                            <Dropdown.Item>Most liked</Dropdown.Item>
+                            <Dropdown.Item onClick={() => sortBy("liked")}>Most liked</Dropdown.Item>
                             <Dropdown.Item>Most commented</Dropdown.Item>
                         </DropdownButton>
                     </Col>
@@ -102,7 +102,6 @@ function Course() {
                     <Col xxl="2" lg="2" md="3">
                         <Button onClick={() => setEditing(!editing) }>{editing ? "Close editor" : "Create post"}</Button>
                     </Col>
-
 
                 </Row>
 
@@ -151,8 +150,6 @@ function Course() {
                 </Container>
 
             </Container>
-
-
             :
             // placeholder - add fading loading screen later
             <div>loading</div>)
