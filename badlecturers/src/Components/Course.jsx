@@ -79,6 +79,7 @@ function Course() {
         refreshPosts();
     }, [])
 
+    /****** Render ******/
     return (
         (!isLoading ?
             <Container id="course-page" fluid>

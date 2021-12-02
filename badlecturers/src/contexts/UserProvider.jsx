@@ -13,7 +13,7 @@ export const UserProvider = ({ children }) => {
     useEffect(() => {
         auth.onAuthStateChanged((user) => {
             setUser(user);
-            navigate("/", { replace: true })
+            // navigate("/", { replace: true })
         })
     }, [])
     return (

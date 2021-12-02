@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Button, Col, Container, FloatingLabel, Form, Row } from 'react-bootstrap';
-import { useLocation, useNavigate } from 'react-router';
+import { useLocation, useNavigate, useParams } from 'react-router';
+import { db } from '../utils/firebase.js';
+import { collection, doc, setDoc, getDoc, addDoc } from 'firebase/firestore'
 import dateFormat from 'dateformat';
 import './CSS/PostPage.css';
 import Post from './Post';
@@ -8,16 +10,27 @@ import Post from './Post';
 function PostPage(props) {
     const navigate = useNavigate();
     const location = useLocation();
-    const postData = location.state.data;
-    const timeStamp = new Date(postData.date);
+    const params = useParams();
+    const [postData,setPostData] = useState(null);
+    let timeStamp = null;
+
+    const getPostData = async () => {
+        const postRef = db.collection("courses").doc(params.courseId).collection("posts").doc(params.postId);
+        const tempPostData = await getDoc(postRef);
+        setPostData(tempPostData.data());
+    }
 
     useEffect(() => {
-
+        if (location.state === null) {
+            getPostData();
+        } else {
+            setPostData(location.state.data);
+        }
     }, [])
 
     return (
         <Container fluid>
-            <Post data={postData} preview = {false} />
+            {postData && <Post data={postData} preview={false} />}
 
             <Container id="comments">
                 <div id="comment-header">Comments</div>

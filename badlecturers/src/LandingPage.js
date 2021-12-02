@@ -15,20 +15,6 @@ dotenv.config()
 
 
 function LandingPage() {
-  useEffect(() => {
-    const options = {
-      method: 'GET',
-      url: "https://openapi.data.uwaterloo.ca/v3/Terms/current",
-      headers: {
-        "x-api-key": process.env.REACT_APP_UW_KEY
-      }
-    }
-
-    axios.request(options).then(result => {
-      console.log(result);
-    })
-  }, [])
-
 
   return (
     <TermProvider>
@@ -36,7 +22,7 @@ function LandingPage() {
         <div className="App">
           <NavBar />
           <Routes>
-            <Route path="/" element={<HomePicker />} />
+            <Route path="" element={<HomePicker />} />
             <Route path="/:courseId" element={<Course />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />

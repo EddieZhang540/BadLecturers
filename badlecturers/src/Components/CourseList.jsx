@@ -48,7 +48,6 @@ function CourseList(props) {
             const courseId = course.subjectCode + course.catalogNumber;
             listCourses.push(
                 <Card className="lecture-subscription" as={Col} lg="5" md="5">
-
                     <Card.Img variant="top" src={(course.associatedAcademicGroupCode in banners) ?
                         banners[course.associatedAcademicGroupCode] : banners["noMatch"]} />
                     <Card.Body>
@@ -64,7 +63,6 @@ function CourseList(props) {
                         <Card.Subtitle>{course.title}</Card.Subtitle>
                         <Link style={{ marginTop: "0.5em" }} to={`${courseId}`}>Go to course page</Link>
                     </Card.Body>
-
                 </Card>
             );
         }
@@ -146,10 +144,8 @@ function CourseList(props) {
                 <Col md={6} id="welcome-msg">Welcome back, {user.displayName}</Col>
             </Row>
 
-
             <Form id="search-lectures"
                 onSubmit={(event) => {
-
                     event.preventDefault();
                     console.log(process.env.REACT_APP_UW_KEY);
                     setInputString(subjectCode + " " + catalogCode);
@@ -192,13 +188,7 @@ function CourseList(props) {
                 </Row>
                 {searchResults}
             </Form>
-
-
             {courses}
-
-
-
-
         </Container>
     );
 }

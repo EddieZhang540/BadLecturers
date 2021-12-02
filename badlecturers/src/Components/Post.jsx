@@ -12,7 +12,7 @@ function Post(props) {
 
     // debugging can remove later
     useEffect(() => {
-        console.log(props.data);
+
     }, [])
 
     return (
