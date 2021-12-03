@@ -5,7 +5,9 @@
 }
 
 #course-header {
+    position: relative;
     padding: 0 2em 0 2em;
+    z-index: 2;
     align-items: flex-end;
     background-color: rgb(226, 250, 141);
     padding-bottom: 20px;
@@ -34,8 +36,10 @@
 }
 
 #post-list {
-    margin: 0 auto;
-    margin-top: 2em;
+    z-index: 1;
+    margin: 0em auto;
+    padding: 2em 2em 0em 2em;
+    background-color:#b8cee0;
 }
 
 #post-editor {

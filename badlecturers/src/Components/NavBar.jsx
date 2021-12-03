@@ -36,12 +36,7 @@ function NavBar() {
                 <Col
                     className="d-none d-lg-block"
                     lg={1}>
-                    <Link to="">Help</Link>
-                </Col>
-                <Col
-                    className="d-none d-lg-block"
-                    lg={1}>
-                    <Link to="">Contact</Link>
+                    <Link to="">About us</Link>
                 </Col>
             </Row>
         </Container>

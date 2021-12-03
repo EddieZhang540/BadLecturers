@@ -1,0 +1,21 @@
+#comment {
+    width: 50em;
+    margin: 1em 0 1em 0;
+    border: solid 1px rgb(0, 140, 255);
+    border-radius: 50px;
+    font-size: 1.25em;
+    padding: 1em;
+    background-color: rgb(173, 217, 255);
+}
+
+#comment-author-name { 
+    font-weight: 800;
+    font-size: 1.5em;
+}
+
+@media (min-width: 0px) and (max-width: 50em)  {
+    #comment {
+        width: 80vw
+    }
+
+}

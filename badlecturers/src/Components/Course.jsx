@@ -6,6 +6,7 @@ import { db } from '../utils/firebase';
 import { collection, doc, setDoc, getDocs, addDoc, query, getDoc } from 'firebase/firestore'
 import "./CSS/Course.css";
 import Post from './Post';
+import FadeIn from 'react-fade-in';
 
 function Course() {
     const user = useContext(UserContext);
@@ -82,81 +83,84 @@ function Course() {
     /****** Render ******/
     return (
         (!isLoading ?
-            <Container id="course-page" fluid>
-                <Row id="course-header">
-                    <Col md="auto">
-                        <div id="course-title">{course.subjectCode} {course.catalogNumber}</div>
-                        <div id="course-subtitle">{course.title}</div>
-                    </Col>
-                    <Col xs="auto">
-                        <Button className="header-buttons"><i class="fas fa-plus" /> Subscribe</Button>
-                    </Col>
-                    <Col xs="auto">
-                        <Button className="header-buttons" onClick={() => setEditing(!editing)}><i class="fas fa-sticky-note" /> {editing ? "Close editor" : "Create post"}</Button>
-                    </Col>
-                    <Col>
-                        <DropdownButton
-                            style={{ float: "right" }}
-                            title={<i class="fas fa-sort-amount-down"></i>}>
-                            <Dropdown.Item onClick={() => sortBy("recent")}>Most recent</Dropdown.Item>
-                            <Dropdown.Item onClick={() => sortBy("liked")}>Most liked</Dropdown.Item>
-                            <Dropdown.Item>Most commented</Dropdown.Item>
-                        </DropdownButton>
-                    </Col>
+            <FadeIn>
+                <Container id="course-page" fluid>
+                    <Row id="course-header">
+                        <Col md="auto">
+                            <div id="course-title">{course.subjectCode} {course.catalogNumber}</div>
+                            <div id="course-subtitle">{course.title}</div>
+                        </Col>
+                        <Col xs="auto">
+                            <Button className="header-buttons"><i class="fas fa-plus" /> Subscribe</Button>
+                        </Col>
+                        <Col xs="auto">
+                            <Button className="header-buttons" onClick={() => setEditing(!editing)}><i class="fas fa-sticky-note" /> {editing ? "Close editor" : "Create post"}</Button>
+                        </Col>
+                        <Col>
+                            <DropdownButton
+                                style={{ float: "right" }}
+                                title={<i class="fas fa-sort-amount-down"></i>}>
+                                <Dropdown.Item onClick={() => sortBy("recent")}>Most recent</Dropdown.Item>
+                                <Dropdown.Item onClick={() => sortBy("liked")}>Most liked</Dropdown.Item>
+                                <Dropdown.Item>Most commented</Dropdown.Item>
+                            </DropdownButton>
+                        </Col>
 
 
 
-                </Row>
+                    </Row>
 
-                <Container id="post-list">
-                    {editing &&
-                        <Form id="post-editor" autocomplete="off"
-                            onSubmit={e => {
-                                e.preventDefault();
+                    <Container id="post-list">
+                        {editing &&
+                            <Form id="post-editor" autocomplete="off"
+                                onSubmit={e => {
+                                    e.preventDefault();
 
-                                // TODO: Do not allow post submission if title is missing
-                                const newPost = {
-                                    title: title,
-                                    desc: desc,
-                                    date: (new Date()).getTime(),
-                                    author: user.uid,
-                                    likes: 0,
-                                    authorName: user.displayName,
-                                    courseId: courseId,
-                                }
-                                postRef.add(newPost).then(result => {
-                                    const newPostRef = db.collection('courses').doc(courseId)
-                                        .collection('posts').doc(result.id).collection('comments');
-                                    newPostRef.add({});
-                                })
-                                refreshPosts();
+                                    // TODO: Do not allow post submission if title is missing
+                                    const newPost = {
+                                        title: title,
+                                        desc: desc,
+                                        date: (new Date()).getTime(),
+                                        author: user.uid,
+                                        likes: 0,
+                                        authorName: user.displayName,
+                                        courseId: courseId,
+                                    }
+                                    postRef.add(newPost).then(result => {
+                                        const newPostRef = db.collection('courses').doc(courseId)
+                                            .collection('posts').doc(result.id).collection('comments');
+                                        newPostRef.add({});
+                                    })
+                                    refreshPosts();
 
-                            }}>
-                            <div>Create a post</div>
-                            <Form.Control
-                                required
-                                onChange={handleTitle}
-                                value={title}
-                                id="edit-title"
-                                placeholder="Enter a helpful title" />
-                            <FloatingLabel label="Enter a description">
+                                }}>
+                                <div>Create a post</div>
                                 <Form.Control
-                                    onChange={handleDesc}
-                                    value={desc}
-                                    as="textarea"
-                                    id="edit-desc" />
-                            </FloatingLabel>
+                                    required
+                                    onChange={handleTitle}
+                                    value={title}
+                                    id="edit-title"
+                                    placeholder="Enter a helpful title" />
+                                <FloatingLabel label="Enter a description">
+                                    <Form.Control
+                                        onChange={handleDesc}
+                                        value={desc}
+                                        as="textarea"
+                                        id="edit-desc" />
+                                </FloatingLabel>
 
-                            <Button type="submit">Submit post</Button>
-                        </Form>
-                    }
-                    {posts}
+                                <Button type="submit">Submit post</Button>
+                            </Form>
+                        }
+                        {posts}
+                    </Container>
+
                 </Container>
+            </FadeIn>
 
-            </Container>
             :
             // placeholder - add fading loading screen later
-            <div>loading</div>)
+            <div></div>)
 
     );
 
