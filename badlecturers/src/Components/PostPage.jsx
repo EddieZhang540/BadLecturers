@@ -8,6 +8,7 @@ import './CSS/PostPage.css';
 import Post from './Post';
 import { UserContext } from '../contexts/UserProvider.jsx';
 import Comment from './Comment'
+import FadeIn from 'react-fade-in/lib/FadeIn';
 
 function PostPage(props) {
     const user = useContext(UserContext);
@@ -94,7 +95,10 @@ function PostPage(props) {
                             <Button id="submit-comment" type="submit">Submit</Button>
                         </Col>
                     </Row>
-                    {comments}
+                    <FadeIn>
+                        {comments}
+                    </FadeIn>
+                    
                 </Form>
 
             </Container>
