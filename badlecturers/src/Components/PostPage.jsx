@@ -19,11 +19,8 @@ function PostPage(props) {
     const [comment, setComment] = useState("");
     const [lectureVideoLink, setLectureVideoLink] = useState(null);
 
-    const [test, setTest] = useState("");
-
     const getPostData = async () => {
         const tempPostData = await getDoc(postRef);
-        // getVideo(tempPostData.data().src)
         setPostData(tempPostData.data());
     }
 
