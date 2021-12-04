@@ -96,7 +96,8 @@ code {
   background-color: var(--primary);
 }
 
-.btn-disabled {
+.btn-primary:disabled {
   color: var(--lightgray);
-  border-color: #61b5bb;
+  border-color: var(--primary);
+  background-color: var(--primary);
 }

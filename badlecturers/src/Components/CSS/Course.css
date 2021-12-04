@@ -45,8 +45,8 @@
 #post-editor {
     padding: 20px;
     margin-top: 20px;
-    background-color:aquamarine;
-    border: solid yellow;
+    background-color:var(--linen);
+    /* border: solid yellow; */
 }
 
 #post-editor > * {
@@ -56,6 +56,10 @@
 #edit-desc {
     min-height: 7em;
     max-height: 10em;
+}
+
+.small-label {
+    text-align: left;
 }
 
 

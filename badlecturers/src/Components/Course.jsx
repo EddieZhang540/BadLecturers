@@ -91,6 +91,9 @@ function Course() {
 
         if (file == null) {
             console.log("no file");
+            setLectureVideoLink("");
+        } else if (file.type.substring(0, 5) != "video") {
+            setLectureVideoLink("wrong type");
         } else {
             // file reference - make a new pointer with the file's name inside the video folder
             // TODO: USE SOME OTHER IDENTIFIER FOR FILES SO USERS CAN UPLOAD FILES WITH THE SAME NAME 
@@ -172,12 +175,14 @@ function Course() {
                                         id="edit-desc" />
                                 </FloatingLabel>
 
-                                <Form.Control type="file" onChange={handleFileUpload}></Form.Control>
+                                <div className="small-label">Upload your Lecture</div>
+                                <Form.Control type="file" accept="video/*" onChange={handleFileUpload}></Form.Control>
+                                {(lectureVideoLink === "wrong type" ? <div className="small-label alert alert-danger">Please attach video files only</div> : null)}
 
                                 <Button
                                     type="submit"
                                     // wait for vid upload
-                                    disabled={lectureVideoLink === "loading" ? true : false}>
+                                    disabled={(lectureVideoLink === "loading" || lectureVideoLink === "wrong type") ? true : false}>
                                     Submit post
                                 </Button>
                             </Form>
