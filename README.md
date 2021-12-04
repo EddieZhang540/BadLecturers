@@ -18,4 +18,4 @@ Mentees:
 
 ## About the Project
 
-...Specific details on the project. Add some pictures/videos too!
+BadLecturers offers students a platform to design and deliver explanations of subject materials that they wish to deepen their understanding of.
