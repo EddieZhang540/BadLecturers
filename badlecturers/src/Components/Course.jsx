@@ -2,8 +2,9 @@ import { useEffect, useState, useContext, useMemo } from 'react';
 import { Container, Row, Button, Col, DropdownButton, Dropdown, Form, FloatingLabel } from 'react-bootstrap';
 import { UserContext } from '../contexts/UserProvider';
 import { useParams } from 'react-router-dom';
-import { db } from '../utils/firebase';
-import { collection, doc, setDoc, getDocs, addDoc, query, getDoc } from 'firebase/firestore'
+import { storage, db } from '../utils/firebase';
+import { collection, doc, setDoc, getDocs, addDoc, query, getDoc } from 'firebase/firestore';
+import 'firebase/storage';
 import "./CSS/Course.css";
 import Post from './Post';
 import FadeIn from 'react-fade-in';
@@ -16,6 +17,7 @@ function Course() {
     const [course, setCourse] = useState(null);
     const [editing, setEditing] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    const [lectureVideoLink, setLectureVideoLink] = useState('');
 
 
     /****** Post editor states and handlers ******/
@@ -80,6 +82,26 @@ function Course() {
         refreshPosts();
     }, [])
 
+    /***** Upload files *****/
+    const handleFileUpload = async (e) => {
+        setLectureVideoLink("loading");
+        const file = e.target.files[0];
+        // storage reference - pointer to root folder in firebase storage
+        const storageRef = storage.ref();
+
+        if (file == null) {
+            console.log("no file");
+        } else {
+            // file reference - make a new pointer with the file's name inside the video folder
+            // TODO: USE SOME OTHER IDENTIFIER FOR FILES SO USERS CAN UPLOAD FILES WITH THE SAME NAME 
+            const fileRef = storageRef.child('lectureVideos/' + file.name);
+            // async upload
+            await fileRef.put(file);
+            // get the link to the file
+            setLectureVideoLink(await fileRef.getDownloadURL());
+        }
+    }
+
     /****** Render ******/
     return (
         (!isLoading ?
@@ -91,15 +113,15 @@ function Course() {
                             <div id="course-subtitle">{course.title}</div>
                         </Col>
                         <Col xs="auto">
-                            <Button className="header-buttons"><i class="fas fa-plus" /> Subscribe</Button>
+                            <Button className="header-buttons"><i className="fas fa-plus" /> Subscribe</Button>
                         </Col>
                         <Col xs="auto">
-                            <Button className="header-buttons" onClick={() => setEditing(!editing)}><i class="fas fa-sticky-note" /> {editing ? "Close editor" : "Create post"}</Button>
+                            <Button className="header-buttons" onClick={() => setEditing(!editing)}><i className="fas fa-sticky-note" /> {editing ? "Close editor" : "Create post"}</Button>
                         </Col>
                         <Col>
                             <DropdownButton
                                 style={{ float: "right" }}
-                                title={<i class="fas fa-sort-amount-down"></i>}>
+                                title={<i className="fas fa-sort-amount-down"></i>}>
                                 <Dropdown.Item onClick={() => sortBy("recent")}>Most recent</Dropdown.Item>
                                 <Dropdown.Item onClick={() => sortBy("liked")}>Most liked</Dropdown.Item>
                                 <Dropdown.Item>Most commented</Dropdown.Item>
@@ -112,7 +134,7 @@ function Course() {
 
                     <Container id="post-list">
                         {editing &&
-                            <Form id="post-editor" autocomplete="off"
+                            <Form id="post-editor" autoComplete="off"
                                 onSubmit={e => {
                                     e.preventDefault();
 
@@ -125,6 +147,7 @@ function Course() {
                                         likes: 0,
                                         authorName: user.displayName,
                                         courseId: courseId,
+                                        lectureVideoLink: lectureVideoLink,
                                     }
                                     postRef.add(newPost).then(result => {
                                         const newPostRef = db.collection('courses').doc(courseId)
@@ -149,7 +172,14 @@ function Course() {
                                         id="edit-desc" />
                                 </FloatingLabel>
 
-                                <Button type="submit">Submit post</Button>
+                                <Form.Control type="file" onChange={handleFileUpload}></Form.Control>
+
+                                <Button
+                                    type="submit"
+                                    // wait for vid upload
+                                    disabled={lectureVideoLink === "loading" ? true : false}>
+                                    Submit post
+                                </Button>
                             </Form>
                         }
                         {posts}
