@@ -18,8 +18,11 @@ function PostPage(props) {
     const [postData, setPostData] = useState(null);
     const [comment, setComment] = useState("");
 
+    const [test, setTest] = useState("");
+
     const getPostData = async () => {
         const tempPostData = await getDoc(postRef);
+        // getVideo(tempPostData.data().src)
         setPostData(tempPostData.data());
     }
 
@@ -59,7 +62,9 @@ function PostPage(props) {
             getPostData();
         } else {
             setPostData(location.state.data);
+
         }
+
         refreshComments();
     }, [])
 
