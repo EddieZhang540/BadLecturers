@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext, useMemo } from 'react';
-import { Container, Row, Button, Col, DropdownButton, Dropdown, Form, FloatingLabel } from 'react-bootstrap';
+import { Container, Row, Button, Col, DropdownButton, Dropdown, Form, FloatingLabel, Modal } from 'react-bootstrap';
 import { UserContext } from '../contexts/UserProvider';
 import { useParams } from 'react-router-dom';
 import { storage, db } from '../utils/firebase';
@@ -137,55 +137,65 @@ function Course() {
 
                     <Container id="post-list">
                         {editing &&
-                            <Form id="post-editor" autoComplete="off"
-                                onSubmit={e => {
-                                    e.preventDefault();
+                            <Modal
+                                show={editing}
+                                size="lg"
+                                aria-labelledby="contained-modal-title-vcenter"
+                                centered
+                            >
+                                <Modal.Header closeButton onClick={() => setEditing(false)}>
+                                    <Modal.Title>Create a post</Modal.Title>
+                                </Modal.Header>
+                                <Form id="post-editor" autoComplete="off"
+                                    onSubmit={e => {
+                                        e.preventDefault();
+                                        setEditing(false);
 
-                                    // TODO: Do not allow post submission if title is missing
-                                    const newPost = {
-                                        title: title,
-                                        desc: desc,
-                                        date: (new Date()).getTime(),
-                                        author: user.uid,
-                                        likes: 0,
-                                        authorName: user.displayName,
-                                        courseId: courseId,
-                                        lectureVideoLink: lectureVideoLink,
-                                    }
-                                    postRef.add(newPost).then(result => {
-                                        const newPostRef = db.collection('courses').doc(courseId)
-                                            .collection('posts').doc(result.id).collection('comments');
-                                        newPostRef.add({});
-                                    })
-                                    refreshPosts();
+                                        // TODO: Do not allow post submission if title is missing
+                                        const newPost = {
+                                            title: title,
+                                            desc: desc,
+                                            date: (new Date()).getTime(),
+                                            author: user.uid,
+                                            likes: 0,
+                                            authorName: user.displayName,
+                                            courseId: courseId,
+                                            lectureVideoLink: lectureVideoLink,
+                                        }
+                                        postRef.add(newPost).then(result => {
+                                            const newPostRef = db.collection('courses').doc(courseId)
+                                                .collection('posts').doc(result.id).collection('comments');
+                                            newPostRef.add({});
+                                        })
+                                        refreshPosts();
 
-                                }}>
-                                <div>Create a post</div>
-                                <Form.Control
-                                    required
-                                    onChange={handleTitle}
-                                    value={title}
-                                    id="edit-title"
-                                    placeholder="Enter a helpful title" />
-                                <FloatingLabel label="Enter a description">
+                                    }}>
                                     <Form.Control
-                                        onChange={handleDesc}
-                                        value={desc}
-                                        as="textarea"
-                                        id="edit-desc" />
-                                </FloatingLabel>
+                                        required
+                                        onChange={handleTitle}
+                                        value={title}
+                                        id="edit-title"
+                                        placeholder="Enter a helpful title" />
+                                    <FloatingLabel label="Enter a description">
+                                        <Form.Control
+                                            onChange={handleDesc}
+                                            value={desc}
+                                            as="textarea"
+                                            id="edit-desc" />
+                                    </FloatingLabel>
 
-                                <div className="small-label">Upload your Lecture</div>
-                                <Form.Control type="file" accept="video/*" onChange={handleFileUpload}></Form.Control>
-                                {(lectureVideoLink === "wrong type" ? <div className="small-label alert alert-danger">Please attach video files only</div> : null)}
+                                    <div className="small-label">Upload your Lecture</div>
+                                    <Form.Control type="file" accept="video/*" onChange={handleFileUpload}></Form.Control>
+                                    {(lectureVideoLink === "wrong type" ? <div className="small-label alert alert-danger">Please attach video files only</div> : null)}
 
-                                <Button
-                                    type="submit"
-                                    // wait for vid upload
-                                    disabled={(lectureVideoLink === "loading" || lectureVideoLink === "wrong type") ? true : false}>
-                                    Submit post
-                                </Button>
-                            </Form>
+                                    <Button
+                                        type="submit"
+                                        // wait for vid upload
+                                        disabled={(lectureVideoLink === "loading" || lectureVideoLink === "wrong type") ? true : false}>
+                                        Submit post
+                                    </Button>
+                                </Form>
+                            </Modal>
                         }
                         {posts}
                     </Container>

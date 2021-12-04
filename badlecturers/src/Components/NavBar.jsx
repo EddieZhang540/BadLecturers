@@ -33,11 +33,7 @@ function NavBar() {
                     lg={1}>
                     <Link to="login">Login</Link>
                 </Col>
-                <Col
-                    className="d-none d-lg-block"
-                    lg={1}>
-                    <Link to="">About us</Link>
-                </Col>
+ 
             </Row>
         </Container>
     );
