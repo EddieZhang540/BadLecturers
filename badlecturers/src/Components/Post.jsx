@@ -49,6 +49,9 @@ function Post(props) {
 
                         </Row>
                         <div id="post-description">{props.data.desc}</div>
+                        <div className="text-center">
+                            <video src={props.data.lectureVideoLink} max-width="75%"></video>
+                        </div>
                     </Container>
                 </MyLink>
             </Col>
