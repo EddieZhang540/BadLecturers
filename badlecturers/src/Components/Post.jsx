@@ -16,6 +16,7 @@ function Post(props) {
     const increment = firebase.firestore.FieldValue.increment(1);
     const timestamp = new Date(postData.date);
     const [likes, setLikes] = useState(0);
+    const [playVid, setPlayVid] = useState(false);
 
     // Upvote handler
     const upvotePost = () => {
@@ -49,9 +50,10 @@ function Post(props) {
 
                         </Row>
                         <div id="post-description">{props.data.desc}</div>
-                        <div className="text-center">
-                            <video src={props.data.lectureVideoLink} max-width="75%"></video>
-                        </div>
+                        <Container id="videoPlayer" className="text-center" onClick={() => setPlayVid(true)}>
+                            <video controls={playVid} src={postData.lectureVideoLink} width={playVid ? "80%" : "50%"}></video>
+                        </Container>
+
                     </Container>
                 </MyLink>
             </Col>

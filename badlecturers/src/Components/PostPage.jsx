@@ -20,7 +20,6 @@ function PostPage(props) {
     const postRef = db.collection("courses").doc(params.courseId).collection("posts").doc(params.postId);
     const [postData, setPostData] = useState(null);
     const [comment, setComment] = useState("");
-    const [lectureVideoLink, setLectureVideoLink] = useState(null);
 
     const getPostData = async () => {
         const tempPostData = await getDoc(postRef);
@@ -65,7 +64,6 @@ function PostPage(props) {
         } else {
             setPostData(location.state.data);
             console.log(location.state.data);
-            setLectureVideoLink(location.state.data.lectureVideoLink);
         }
 
         refreshComments();
@@ -74,14 +72,6 @@ function PostPage(props) {
     return (
         <Container fluid>
             {postData && <Post data={postData} preview={false} />}
-
-            <Container id="videoPlayer">
-                <video
-                    controls
-                    src={lectureVideoLink}
-                >
-                </video>
-            </Container>
 
             <Container id="comments">
                 <div id="comment-header">Comments</div>
