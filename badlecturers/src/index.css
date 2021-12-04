@@ -95,3 +95,8 @@ code {
   border-color: var(--primary);
   background-color: var(--primary);
 }
+
+.btn-disabled {
+  color: var(--lightgray);
+  border-color: #61b5bb;
+}

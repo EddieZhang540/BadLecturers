@@ -33,8 +33,8 @@ function Post(props) {
         <Row>
             <Col xs="auto" id="likes">
                 <div id="like-counter">{postData.likes}</div>
-                <Button id = "upvote-button" onClick={() => upvotePost()}>
-                    <i class="fas fa-arrow-alt-circle-up"></i>
+                <Button id="upvote-button" onClick={() => upvotePost()}>
+                    <i className="fas fa-arrow-alt-circle-up"></i>
                 </Button>
             </Col>
             <Col>

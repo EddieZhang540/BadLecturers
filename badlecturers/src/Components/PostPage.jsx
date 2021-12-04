@@ -17,6 +17,7 @@ function PostPage(props) {
     const postRef = db.collection("courses").doc(params.courseId).collection("posts").doc(params.postId);
     const [postData, setPostData] = useState(null);
     const [comment, setComment] = useState("");
+    const [lectureVideoLink, setLectureVideoLink] = useState(null);
 
     const [test, setTest] = useState("");
 
@@ -63,6 +64,7 @@ function PostPage(props) {
         } else {
             setPostData(location.state.data);
 
+            setLectureVideoLink(location.state.data.lectureVideoLink);
         }
 
         refreshComments();
@@ -71,6 +73,14 @@ function PostPage(props) {
     return (
         <Container fluid>
             {postData && <Post data={postData} preview={false} />}
+
+            <Container id="videoPlayer">
+                <video
+                    controls
+                    src={lectureVideoLink}
+                >
+                </video>
+            </Container>
 
             <Container id="comments">
                 <div id="comment-header">Comments</div>
@@ -92,7 +102,7 @@ function PostPage(props) {
                                 required
                                 id="comment-box"
                                 onChange={handleComment}
-                                value = {comment}
+                                value={comment}
                                 as="textarea"
                                 placeholder="Leave a comment!" />
                         </Col>
@@ -103,11 +113,11 @@ function PostPage(props) {
                     <FadeIn>
                         {comments}
                     </FadeIn>
-                    
+
                 </Form>
 
             </Container>
-        </Container>
+        </Container >
     );
 }
 

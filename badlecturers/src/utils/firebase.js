@@ -1,6 +1,7 @@
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore'
 import { collection, doc, setDoc, getDoc } from 'firebase/firestore'
+import 'firebase/compat/storage';
 import 'firebase/compat/auth'
 import dotenv from 'dotenv'
 dotenv.config()
@@ -17,6 +18,7 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
+export const storage = firebase.storage();
 export const db = firebase.firestore();
 export const auth = firebase.auth();
 const googleProvider = new firebase.auth.GoogleAuthProvider();
