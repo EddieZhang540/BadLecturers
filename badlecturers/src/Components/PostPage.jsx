@@ -8,6 +8,9 @@ import './CSS/PostPage.css';
 import Post from './Post';
 import { UserContext } from '../contexts/UserProvider.jsx';
 import Comment from './Comment'
+
+import { auth } from '../utils/firebase.js';
+
 import FadeIn from 'react-fade-in/lib/FadeIn';
 
 function PostPage(props) {
@@ -56,11 +59,12 @@ function PostPage(props) {
 
 
     useEffect(() => {
+        console.log(auth.currentUser);
         if (location.state === null) {
             getPostData();
         } else {
             setPostData(location.state.data);
-
+            console.log(location.state.data);
             setLectureVideoLink(location.state.data.lectureVideoLink);
         }
 

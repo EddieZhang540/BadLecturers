@@ -1,0 +1,29 @@
+.login-buttons {
+    font-size: 1.25em;
+    border-radius: 100px;
+    display: block;
+    margin: 1em auto;
+    padding: 0.5em 1em 0.5em 1em;
+    font-weight: 800;
+}
+
+#made-for {
+    font-style: italic;
+    font-size: 1.25em;
+}
+
+#login-options {
+    padding: 20px;
+    margin-top: 1em;
+    border-radius: 50px;
+    background-color: aliceblue;
+}
+
+#github {
+    margin: 2em;
+    font-weight: 800;
+    border-radius: 50px;
+    font-size: 1.25em;
+    background-color: black;
+    border: none;
+}

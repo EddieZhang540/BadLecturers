@@ -3,6 +3,7 @@ import 'firebase/compat/firestore'
 import { collection, doc, setDoc, getDoc } from 'firebase/firestore'
 import 'firebase/compat/storage';
 import 'firebase/compat/auth'
+
 import dotenv from 'dotenv'
 dotenv.config()
 
@@ -28,12 +29,15 @@ const handleLogin = async (user) => {
     const getUser = await getDoc(userRef);
 
     if (!getUser.exists()) {
-        await setDoc(doc(db,"users",user.uid), {
+        await setDoc(doc(db, "users", user.uid), {
             name: user.displayName,
             courses: {}
         })
     }
 }
+
+
+
 
 export const signInWithGoogle = () => {
     auth.signInWithPopup(googleProvider).then((result) => {
@@ -41,7 +45,7 @@ export const signInWithGoogle = () => {
 
         // The signed-in user info.
         const user = result.user;
-        console.log(user);
+    
 
     }).catch((error) => {
         // Handle Errors here.
