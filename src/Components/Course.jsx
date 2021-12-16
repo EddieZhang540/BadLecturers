@@ -97,7 +97,7 @@ function Course() {
         } else {
             // file reference - make a new pointer with the file's name inside the video folder
             // TODO: USE SOME OTHER IDENTIFIER FOR FILES SO USERS CAN UPLOAD FILES WITH THE SAME NAME 
-            const fileRef = storageRef.child('lectureVideos/' + file.name);
+            const fileRef = storageRef.child('lectureVideos/' + user.uid + "_" + file.name);
             // async upload
             await fileRef.put(file);
             // get the link to the file
