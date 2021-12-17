@@ -10,20 +10,32 @@ import './CSS/Login.css';
 function Login() {
     let navigate = useNavigate();
     const user = useContext(UserContext);
+    const [redir, setRedir] = useState(false);
+
+    const signIn = () => {
+        signInWithGoogle();
+        setRedir(true);
+    }
+
+    useEffect(() => {
+        if (user !== null && redir == true) {
+            navigate("/");
+        }
+    })
+
 
     return (
         <Container fluid>
-
 
             <Container id="login-options">
                 <img src={logo} alt="" style={{ marginRight: "1em" }} />
                 <div style={{ fontWeight: "800", fontSize: "3em" }}>Welcome to BadLecturers</div>
                 <div id="made-for">Made for UWaterloo Project Program Fall 2021</div>
-                <Button className="login-buttons" onClick={signInWithGoogle}>Sign in with Google</Button>
+                <Button className="login-buttons" onClick={signIn}>Sign in with Google</Button>
                 <Button className="login-buttons" onClick={logOut}>Log out</Button>
             </Container>
 
-                <Button id="github" target="_blank" href="https://github.com/EddieZhang540/BadLecturers"><i class="fab fa-github"></i> Check out our source code!</Button>
+            <Button id="github" target="_blank" href="https://github.com/EddieZhang540/BadLecturers"><i className="fab fa-github"></i> Check out our source code!</Button>
 
 
 

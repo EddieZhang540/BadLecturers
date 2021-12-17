@@ -12,11 +12,11 @@ function NavBar() {
             <Row id="nav-bar" className="align-items-center">
                 <Col className="d-none d-lg-block" xs={3}>
                     <Link to="">
-                        <img src={logo} alt="" width={40} height={40} style = {{marginRight: "1em"}} />
+                        <img src={logo} alt="" width={40} height={40} style={{ marginRight: "1em" }} />
                         <span>BadLecturers</span>
                     </Link>
                 </Col>
-                
+
 
                 {/* TODO: Dropdown menu here */}
                 <Col className="d-lg-none" xs={4}>Dropdown</Col>
@@ -24,7 +24,8 @@ function NavBar() {
                 {/*TODO: Navbar options*/}
                 <Col
                     className="d-none d-lg-block"
-                    lg={1}>
+                    style={{ textAlign: "left" }}
+                    lg={6}>
                     <Link to="">Home</Link>
                 </Col>
 
@@ -33,7 +34,7 @@ function NavBar() {
                     lg={1}>
                     <Link to="login">Login</Link>
                 </Col>
- 
+
             </Row>
         </Container>
     );

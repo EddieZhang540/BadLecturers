@@ -76,7 +76,7 @@ function CourseList(props) {
                         <Card.Subtitle>{course.title}</Card.Subtitle>
 
                         {/* Redirects to /:courseId */}
-                        <Link className="btn btn-primary" to={`${courseId}`}>Go to course page</Link>
+                        <Link className="btn btn-primary mt-3" to={`${courseId}`}>Go to course page</Link>
                     </Card.Body>
                 </Card>
             );
@@ -125,7 +125,7 @@ function CourseList(props) {
                     </Card.Text>
 
                     {/* Redirects to /:courseId */}
-                    <Link style={{ marginTop: "0.5em" }} to={`${courseId}`}>Go to course page</Link>
+                    <Link className="btn btn-primary" style={{ marginTop: "0.5em" }} to={`${courseId}`}>Go to course page</Link>
 
                     {/* Adds search result to user's [courses] object in db */}
                     <Button

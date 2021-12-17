@@ -41,7 +41,7 @@ function HomePicker() {
   const user = useContext(UserContext);
   return (
     <div>
-      {user === null ? <SignUp /> : <CourseList />}
+      {user === null ? <Login /> : <CourseList />}
     </div>
   );
 }
