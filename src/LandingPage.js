@@ -1,7 +1,6 @@
 import './LandingPage.css';
 import React, { useEffect, useContext, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom'
-import SignUp from './Components/SignUp';
 import Login from './Components/Login';
 import { UserContext, UserProvider } from './contexts/UserProvider';
 import NavBar from './Components/NavBar';
@@ -26,7 +25,6 @@ function LandingPage() {
             <Route path="" element={<HomePicker />} />
             <Route path="/:courseId" element={<Course />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<SignUp />} />
             <Route path=":courseId/p/:postId" element ={<PostPage />} />
           </Routes>
         </div>

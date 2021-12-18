@@ -32,7 +32,7 @@ function Login() {
                 <div style={{ fontWeight: "800", fontSize: "3em" }}>Welcome to BadLecturers</div>
                 <div id="made-for">Made for UWaterloo Project Program Fall 2021</div>
                 <Button className="login-buttons" onClick={signIn}>Sign in with Google</Button>
-                <Button className="login-buttons" onClick={logOut}>Log out</Button>
+                {user === null ? null : <Button className="login-buttons" onClick={logOut}>Log out</Button>}
             </Container>
 
             <Button id="github" target="_blank" href="https://github.com/EddieZhang540/BadLecturers"><i className="fab fa-github"></i> Check out our source code!</Button>
