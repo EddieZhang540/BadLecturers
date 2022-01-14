@@ -6,6 +6,11 @@ This is a project that is part of the S21 UWaterloo CSC x DSC Project Program!
 
 BadLecturers offers students a platform to design, deliver, and critique explanations of subject materials. Share your lectures to deepen your understanding and to achieve a higher level of learning!
 
+## Demo
+[![](https://i.ytimg.com/vi_webp/DPXnt8qYqQw/mqdefault.webp)](https://www.youtube.com/watch?v=DPXnt8qYqQw)
+
+# About the Project
+
 ### Members
 Mentor:
 - William Lei
@@ -16,7 +21,6 @@ Mentees:
 - Jason Li
 - Owen Wong
 
-# About the Project
 
 ## Inspiration
 
